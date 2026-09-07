@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5월의 레몬나무</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Serif KR', Georgia, serif; background: #1a2e1a; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 16px; }
+.book { max-width: 640px; width: 100%; background: #f9f6ef; border-radius: 18px; overflow: hidden; border: 1px solid #e0d8c8; box-shadow: 0 8px 40px rgba(0,0,0,0.4); }
+.page { display: none; flex-direction: column; }
+.page.on { display: flex; }
+.ill { width: 100%; flex-shrink: 0; }
+.ta { padding: 26px 34px 20px; background: #f9f6ef; display: flex; flex-direction: column; gap: 14px; }
+.pt { font-size: 17px; line-height: 2.2; color: #3a2e1e; text-align: center; word-break: keep-all; }
+.nr { display: flex; align-items: center; justify-content: space-between; }
+.nb { background: none; border: 1px solid #c8b99a; border-radius: 8px; padding: 8px 22px; font-size: 14px; color: #7a6548; cursor: pointer; font-family: inherit; transition: background .15s; }
+.nb:hover { background: #ede5d4; }
+.nb:disabled { opacity: .3; cursor: default; }
+.ni { font-size: 12px; color: #a08c6a; font-family: 'Noto Sans KR', sans-serif; }
+.cover-ta { padding: 22px 34px 20px; background: #f9f6ef; text-align: center; display: flex; flex-direction: column; gap: 6px; }
+.ct { font-size: 25px; font-weight: 700; color: #2d4a1e; line-height: 1.5; }
+.cs { font-size: 13px; color: #7a9060; font-family: 'Noto Sans KR', sans-serif; }
+
+.sway { animation: sw 4s ease-in-out infinite; transform-origin: 320px 290px; }
+@keyframes sw { 0%,100%{transform:rotate(0deg);} 40%{transform:rotate(2.5deg);} 70%{transform:rotate(-2deg);} }
+
+.sway2 { animation: sw2 3.8s ease-in-out .5s infinite; transform-origin: 200px 270px; }
+@keyframes sw2 { 0%,100%{transform:rotate(0deg);} 40%{transform:rotate(-2deg);} 70%{transform:rotate(1.8deg);} }
+
+.sway3 { animation: sw3 4.2s ease-in-out 1s infinite; transform-origin: 440px 265px; }
+@keyframes sw3 { 0%,100%{transform:rotate(0deg);} 40%{transform:rotate(2deg);} 70%{transform:rotate(-1.5deg);} }
+
+.leaf-float { animation: lf 5s ease-in-out infinite; }
+@keyframes lf { 0%,100%{transform:translateY(0) rotate(0deg);} 50%{transform:translateY(-8px) rotate(6deg);} }
+
+.sunray { animation: sr 4s ease-in-out infinite; }
+@keyframes sr { 0%,100%{opacity:.35;} 50%{opacity:.7;} }
+
+.blink  { animation: blk 3s ease-in-out infinite; }
+.blink2 { animation: blk 3s ease-in-out .9s infinite; }
+.blink3 { animation: blk 3s ease-in-out 1.8s infinite; }
+@keyframes blk { 0%,100%{opacity:.45;} 50%{opacity:1;} }
+
+.seed-glow { animation: sg 2.5s ease-in-out infinite; }
+@keyframes sg { 0%,100%{opacity:.15;} 50%{opacity:.4;} }
+
+.lemon-bob { animation: lb 3s ease-in-out infinite; }
+@keyframes lb { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-5px);} }
+
+.grow { animation: gr 6s ease-out forwards; transform-origin: 320px 290px; }
+@keyframes gr { 0%{transform:scaleY(0.2) scaleX(0.5);} 100%{transform:scaleY(1) scaleX(1);} }
+</style>
+</head>
+<body>
+<div class="book">
+
+<!-- 표지 -->
+<div class="page on" id="p0">
+<svg class="ill" viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="300" fill="#e8f5e0"/>
+  <ellipse cx="320" cy="0" rx="400" ry="140" fill="#d0ecc0" opacity=".55"/>
+  <!-- 하늘 -->
+  <ellipse cx="320" cy="0" rx="320" ry="100" fill="#c8f0e0" opacity=".3"/>
+  <!-- 햇살 -->
+  <circle cx="320" cy="70" r="44" fill="#fff8c0" opacity=".45"/>
+  <circle cx="320" cy="70" r="28" fill="#fde87a" opacity=".88"/>
+  <line x1="320" y1="32" x2="320" y2="23" stroke="#f0c830" stroke-width="2.2" stroke-linecap="round" class="sunray"/>
+  <line x1="351" y1="41" x2="358" y2="33" stroke="#f0c830" stroke-width="2.2" stroke-linecap="round" class="sunray"/>
+  <line x1="289" y1="41" x2="282" y2="33" stroke="#f0c830" stroke-width="2.2" stroke-linecap="round" class="sunray"/>
+  <line x1="362" y1="70" x2="371" y2="70" stroke="#f0c830" stroke-width="2.2" stroke-linecap="round" class="sunray"/>
+  <line x1="278" y1="70" x2="269" y2="70" stroke="#f0c830" stroke-width="2.2" stroke-linecap="round" class="sunray"/>
+  <line x1="351" y1="99" x2="358" y2="107" stroke="#f0c830" stroke-width="2.2" stroke-linecap="round" class="sunray"/>
+  <line x1="289" y1="99" x2="282" y2="107" stroke="#f0c830" stroke-width="2.2" stroke-linecap="round" class="sunray"/>
+
+  <!-- 작은 레몬나무 (씨앗에서 막 자란) -->
+  <rect x="315" y="215" width="10" height="75" rx="4" fill="#8a6030"/>
+  <!-- 흔들리는 잎들 -->
+  <g class="sway">
+    <ellipse cx="320" cy="200" rx="38" ry="35" fill="#4a9a28"/>
+    <ellipse cx="295" cy="188" rx="26" ry="24" fill="#5aaa32"/>
+    <ellipse cx="346" cy="192" rx="24" ry="22" fill="#4a9a28"/>
+    <!-- 레몬 하나 -->
+    <g class="lemon-bob">
+      <ellipse cx="338" cy="195" rx="10" ry="7" fill="#f5e040"/>
+      <ellipse cx="338" cy="195" rx="7" ry="5" fill="#fdf060"/>
+    </g>
+  </g>
+
+  <!-- 화분 -->
+  <ellipse cx="320" cy="292" rx="30" ry="8" fill="#c8a060" opacity=".7"/>
+  <rect x="298" y="278" width="44" height="18" rx="4" fill="#c8a060"/>
+  <ellipse cx="320" cy="278" rx="22" ry="6" fill="#d8b070"/>
+
+  <!-- 나비 -->
+  <ellipse cx="260" cy="165" rx="14" ry="8" fill="#f8e060" opacity=".75" transform="rotate(-20 260 165)"/>
+  <ellipse cx="240" cy="162" rx="12" ry="7" fill="#f8e060" opacity=".75" transform="rotate(20 240 162)"/>
+  <circle cx="250" cy="164" r="3" fill="#e0a020"/>
+
+  <!-- 땅 풀 -->
+  <ellipse cx="320" cy="298" rx="300" ry="12" fill="#88c848" opacity=".25"/>
+</svg>
+<div class="cover-ta">
+  <div class="ct">5월의 레몬나무</div>
+  <div class="cs">감자와 함께 자라는 아빠의 선물 🍋</div>
+</div>
+<div class="ta">
+  <div class="pt" style="font-size:14px;color:#7a6548;font-family:'Noto Sans KR',sans-serif;">2026년 5월, 세상에서 가장 싱그러운 계절의 이야기</div>
+  <div class="nr">
+    <button class="nb" disabled>← 이전</button>
+    <span class="ni">표지 · 6페이지</span>
+    <button class="nb" onclick="go(1)">다음 →</button>
+  </div>
+</div>
+</div>
+
+<!-- 1: 5월이 아름다운 이유 -->
+<div class="page" id="p1">
+<svg class="ill" viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="280" fill="#e0f2d8"/>
+  <ellipse cx="320" cy="0" rx="400" ry="120" fill="#c8ecca" opacity=".5"/>
+  <!-- 햇살 -->
+  <circle cx="320" cy="68" r="38" fill="#fff8c0" opacity=".4"/>
+  <circle cx="320" cy="68" r="24" fill="#fde87a" opacity=".85"/>
+  <line x1="320" y1="34" x2="320" y2="26" stroke="#f0c830" stroke-width="2" stroke-linecap="round" class="sunray"/>
+  <line x1="347" y1="42" x2="353" y2="35" stroke="#f0c830" stroke-width="2" stroke-linecap="round" class="sunray"/>
+  <line x1="293" y1="42" x2="287" y2="35" stroke="#f0c830" stroke-width="2" stroke-linecap="round" class="sunray"/>
+  <line x1="356" y1="68" x2="364" y2="68" stroke="#f0c830" stroke-width="2" stroke-linecap="round" class="sunray"/>
+  <line x1="284" y1="68" x2="276" y2="68" stroke="#f0c830" stroke-width="2" stroke-linecap="round" class="sunray"/>
+
+  <!-- 숫자 33 + 달력 느낌 -->
+  <rect x="60" y="100" width="130" height="100" rx="10" fill="#fff" opacity=".6"/>
+  <rect x="60" y="100" width="130" height="24" rx="10" fill="#88c848" opacity=".5"/>
+  <text x="82" y="118" font-size="12" fill="#2d4a1e" font-family="'Noto Sans KR',sans-serif" font-weight="bold">5월</text>
+  <text x="75" y="160" font-size="38" fill="#2d4a1e" font-family="Georgia" font-weight="bold" opacity=".7">33</text>
+  <text x="80" y="185" font-size="11" fill="#7a9060" font-family="'Noto Sans KR',sans-serif">번째 5월</text>
+
+  <!-- 숲길 -->
+  <rect x="0" y="210" width="640" height="70" fill="#88c848" opacity=".3"/>
+  <ellipse cx="320" cy="280" rx="320" ry="30" fill="#70b030" opacity=".2"/>
+
+  <!-- 나무들 -->
+  <g class="sway2">
+    <rect x="193" y="145" width="14" height="90" rx="4" fill="#7a5230"/>
+    <ellipse cx="200" cy="132" rx="44" ry="40" fill="#3a8a20"/>
+    <ellipse cx="178" cy="120" rx="30" ry="28" fill="#4a9a28"/>
+  </g>
+  <g class="sway">
+    <rect x="313" y="155" width="14" height="80" rx="4" fill="#7a5230"/>
+    <ellipse cx="320" cy="144" rx="38" ry="35" fill="#3a8a20"/>
+  </g>
+  <g class="sway3">
+    <rect x="433" y="150" width="14" height="85" rx="4" fill="#7a5230"/>
+    <ellipse cx="440" cy="138" rx="42" ry="38" fill="#4a9a28"/>
+    <ellipse cx="460" cy="125" rx="28" ry="25" fill="#3a8a20"/>
+  </g>
+
+  <!-- 꽃들 -->
+  <circle cx="155" cy="225" r="6" fill="#f7b2c0" opacity=".85"/>
+  <circle cx="172" cy="220" r="5" fill="#fcd97a" opacity=".85"/>
+  <circle cx="460" cy="222" r="6" fill="#c9b2f7" opacity=".85"/>
+  <circle cx="478" cy="226" r="5" fill="#f7b2c0" opacity=".85"/>
+
+  <!-- 감자 실루엣 엄마 배에 -->
+  <ellipse cx="530" cy="185" rx="28" ry="36" fill="#4a6070" opacity=".5"/>
+  <circle cx="530" cy="162" rx="18" ry="18" r="18" fill="#4a6070" opacity=".55"/>
+  <ellipse class="seed-glow" cx="530" cy="192" rx="14" ry="12" fill="#f5d880" opacity=".4"/>
+</svg>
+<div class="ta">
+  <div class="pt">
+    33년을 살아오며<br>
+    이렇게 아름다운 5월이 있었을까요.<br>
+    2026년의 5월은 유독<br>
+    푸릇푸릇하고 행복했어요.
+  </div>
+  <div class="nr">
+    <button class="nb" onclick="go(-1)">← 이전</button>
+    <span class="ni">1 / 6</span>
+    <button class="nb" onclick="go(1)">다음 →</button>
+  </div>
+</div>
+</div>
+
+<!-- 2: 감자와 함께라서 -->
+<div class="page" id="p2">
+<svg class="ill" viewBox="0 0 640 275" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="275" fill="#fdf6e8"/>
+  <ellipse cx="320" cy="0" rx="400" ry="110" fill="#ffe9c0" opacity=".45"/>
+  <!-- 햇살 -->
+  <circle cx="160" cy="55" r="32" fill="#fff8c0" opacity=".4"/>
+  <circle cx="160" cy="55" r="20" fill="#fde87a" opacity=".8"/>
+  <line x1="160" y1="26" x2="160" y2="18" stroke="#f0c830" stroke-width="2" stroke-linecap="round" class="sunray"/>
+  <line x1="182" y1="33" x2="188" y2="26" stroke="#f0c830" stroke-width="2" stroke-linecap="round" class="sunray"/>
+  <line x1="138" y1="33" x2="132" y2="26" stroke="#f0c830" stroke-width="2" stroke-linecap="round" class="sunray"/>
+
+  <!-- 엄마 배 크게 중앙 -->
+  <ellipse class="sway" cx="320" cy="168" rx="90" ry="78" fill="#f5d8a8" opacity=".55"/>
+  <ellipse cx="320" cy="160" rx="70" ry="60" fill="#f8e0b8" opacity=".5"/>
+  <!-- 감자 실루엣 배 안에 -->
+  <ellipse cx="320" cy="158" rx="32" ry="28" fill="#2a5080" opacity=".2"/>
+  <circle cx="320" cy="144" r="18" fill="#3a6898" opacity=".25"/>
+  <ellipse cx="320" cy="165" rx="14" ry="16" fill="#3a6898" opacity=".22"/>
+  <!-- 하트 -->
+  <path d="M310 155 Q310 147 320 152 Q330 147 330 155 Q330 164 320 170 Q310 164 310 155Z" fill="#f07080" opacity=".45"/>
+  <!-- 배 위에 손 -->
+  <path d="M250 165 Q282 148 320 155" fill="none" stroke="#c8a870" stroke-width="11" stroke-linecap="round" opacity=".45"/>
+  <path d="M320 155 Q358 148 390 165" fill="none" stroke="#c8a870" stroke-width="11" stroke-linecap="round" opacity=".45"/>
+
+  <!-- 주변 5월 꽃 -->
+  <circle cx="130" cy="185" r="8" fill="#f7b2c0" opacity=".8"/>
+  <circle cx="148" cy="175" r="6" fill="#fcd97a" opacity=".8"/>
+  <circle cx="112" cy="172" r="6" fill="#c9b2f7" opacity=".8"/>
+  <circle cx="490" cy="180" r="8" fill="#f7b2c0" opacity=".8"/>
+  <circle cx="510" cy="168" r="6" fill="#fcd97a" opacity=".8"/>
+  <circle cx="472" cy="170" r="7" fill="#c9b2f7" opacity=".8"/>
+
+  <!-- 나비 -->
+  <ellipse cx="210" cy="115" rx="12" ry="7" fill="#f8e060" opacity=".7" transform="rotate(-20 210 115)"/>
+  <ellipse cx="192" cy="112" rx="11" ry="6" fill="#f8e060" opacity=".7" transform="rotate(20 192 112)"/>
+  <circle cx="201" cy="114" r="2.5" fill="#e0a020"/>
+
+  <!-- 풀밭 -->
+  <ellipse cx="320" cy="268" rx="300" ry="16" fill="#88c848" opacity=".2"/>
+</svg>
+<div class="ta">
+  <div class="pt">
+    아마도 감자와 함께라서겠지요.<br>
+    감자와 함께 보내는 5월이라서<br>
+    세상이 더 초록빛으로<br>
+    빛나는 것 같아요.
+  </div>
+  <div class="nr">
+    <button class="nb" onclick="go(-1)">← 이전</button>
+    <span class="ni">2 / 6</span>
+    <button class="nb" onclick="go(1)">다음 →</button>
+  </div>
+</div>
+</div>
+
+<!-- 3: 씨앗 심는 아빠 -->
+<div class="page" id="p3">
+<svg class="ill" viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="280" fill="#e8f5e0"/>
+  <ellipse cx="320" cy="0" rx="400" ry="110" fill="#d0ecc0" opacity=".5"/>
+
+  <!-- 흙 배경 -->
+  <rect x="0" y="200" width="640" height="80" fill="#b8924a" opacity=".25"/>
+  <ellipse cx="320" cy="200" rx="320" ry="22" fill="#c8a060" opacity=".2"/>
+
+  <!-- 아빠 실루엣 (쭈그리고 앉아 씨앗 심는) -->
+  <ellipse cx="240" cy="218" rx="44" ry="18" fill="#3a5070" opacity=".6"/>
+  <!-- 상체 -->
+  <ellipse cx="240" cy="180" rx="28" ry="36" fill="#3a5070" opacity=".65"/>
+  <circle cx="240" cy="148" r="22" fill="#3a5070" opacity=".7"/>
+  <!-- 팔 -->
+  <path d="M214 185 Q192 198 185 212" fill="none" stroke="#3a5070" stroke-width="11" stroke-linecap="round" opacity=".65"/>
+  <path d="M266 185 Q280 192 290 200" fill="none" stroke="#3a5070" stroke-width="11" stroke-linecap="round" opacity=".65"/>
+  <!-- 손에 씨앗 -->
+  <ellipse cx="290" cy="204" rx="9" ry="6" fill="#3a5070" opacity=".65"/>
+  <!-- 씨앗 -->
+  <ellipse cx="292" cy="202" rx="5" ry="3.5" fill="#e8c870"/>
+  <ellipse cx="292" cy="201" rx="3" ry="2" fill="#f8e090"/>
+
+  <!-- 씨앗 주변 빛 -->
+  <ellipse class="seed-glow" cx="292" cy="202" rx="14" ry="10" fill="#f8e090" opacity=".3"/>
+  <line x1="292" y1="190" x2="292" y2="185" stroke="#f8e090" stroke-width="1.2" stroke-linecap="round" opacity=".5" class="blink"/>
+  <line x1="302" y1="196" x2="307" y2="192" stroke="#f8e090" stroke-width="1.2" stroke-linecap="round" opacity=".5" class="blink2"/>
+  <line x1="282" y1="196" x2="277" y2="192" stroke="#f8e090" stroke-width="1.2" stroke-linecap="round" opacity=".5" class="blink3"/>
+
+  <!-- 화분 -->
+  <rect x="360" y="192" width="70" height="48" rx="6" fill="#c8a060"/>
+  <ellipse cx="395" cy="192" rx="35" ry="9" fill="#d8b070"/>
+  <ellipse cx="395" cy="240" rx="35" ry="9" fill="#b89050"/>
+  <!-- 화분 속 흙 -->
+  <ellipse cx="395" cy="192" rx="30" ry="7" fill="#a07840" opacity=".7"/>
+
+  <!-- 아주 작은 새싹 화분에 -->
+  <rect x="393" y="175" width="4" height="18" rx="2" fill="#5a9e30"/>
+  <ellipse cx="389" cy="180" rx="7" ry="4" fill="#78c040" transform="rotate(-30 389 180)"/>
+
+  <!-- 레몬 씨앗 일러스트 설명선 -->
+  <ellipse cx="292" cy="202" rx="5" ry="3.5" fill="#e8c870"/>
+  <line x1="297" y1="198" x2="330" y2="175" stroke="#a08040" stroke-width="1" stroke-dasharray="3,3" opacity=".5"/>
+  <text x="332" y="172" font-size="11" fill="#7a6030" font-family="'Noto Sans KR',sans-serif" opacity=".75">레몬 씨앗</text>
+
+  <!-- 풀과 꽃 -->
+  <circle cx="95" cy="215" r="6" fill="#f7b2c0" opacity=".8"/>
+  <circle cx="540" cy="218" r="6" fill="#c9b2f7" opacity=".8"/>
+  <circle cx="555" cy="210" r="5" fill="#fcd97a" opacity=".8"/>
+</svg>
+<div class="ta">
+  <div class="pt">
+    감자가 찾아오던 그 무렵,<br>
+    아빠는 레몬 씨앗 하나를 심었어요.<br>
+    작고 작은 씨앗이었지만<br>
+    아빠의 손끝은 두근거렸어요.
+  </div>
+  <div class="nr">
+    <button class="nb" onclick="go(-1)">← 이전</button>
+    <span class="ni">3 / 6</span>
+    <button class="nb" onclick="go(1)">다음 →</button>
+  </div>
+</div>
+</div>
+
+<!-- 4: 함께 자라는 레몬나무와 감자 -->
+<div class="page" id="p4">
+<svg class="ill" viewBox="0 0 640 285" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="285" fill="#e8f5e0"/>
+  <ellipse cx="320" cy="0" rx="400" ry="110" fill="#d0ecc0" opacity=".5"/>
+  <!-- 햇살 -->
+  <circle cx="320" cy="65" r="36" fill="#fff8c0" opacity=".42"/>
+  <circle cx="320" cy="65" r="23" fill="#fde87a" opacity=".85"/>
+  <line x1="320" y1="33" x2="320" y2="25" stroke="#f0c830" stroke-width="2" stroke-linecap="round" class="sunray"/>
+  <line x1="346" y1="41" x2="352" y2="34" stroke="#f0c830" stroke-width="2" stroke-linecap="round" class="sunray"/>
+  <line x1="294" y1="41" x2="288" y2="34" stroke="#f0c830" stroke-width="2" stroke-linecap="round" class="sunray"/>
+  <line x1="354" y1="65" x2="362" y2="65" stroke="#f0c830" stroke-width="2" stroke-linecap="round" class="sunray"/>
+  <line x1="286" y1="65" x2="278" y2="65" stroke="#f0c830" stroke-width="2" stroke-linecap="round" class="sunray"/>
+
+  <!-- 레몬나무 (작지만 싱그럽게) -->
+  <g class="sway">
+    <rect x="315" y="195" width="10" height="85" rx="4" fill="#8a6030"/>
+    <ellipse cx="320" cy="180" rx="46" ry="42" fill="#4a9a28"/>
+    <ellipse cx="296" cy="167" rx="30" ry="28" fill="#5aaa32"/>
+    <ellipse cx="346" cy="170" rx="28" ry="26" fill="#4a9a28"/>
+    <!-- 레몬들 -->
+    <g class="lemon-bob">
+      <ellipse cx="340" cy="172" rx="12" ry="8" fill="#f5e040"/>
+      <ellipse cx="340" cy="172" rx="8" ry="5.5" fill="#fdf060"/>
+      <ellipse cx="300" cy="178" rx="10" ry="7" fill="#f0d830"/>
+      <ellipse cx="300" cy="178" rx="7" ry="4.5" fill="#fde850"/>
+    </g>
+    <!-- 꽃 -->
+    <circle cx="328" cy="162" r="5" fill="#fff" opacity=".9"/>
+    <circle cx="328" cy="162" r="3" fill="#fde87a" opacity=".8"/>
+  </g>
+  <!-- 화분 -->
+  <rect x="294" y="278" width="52" height="10" rx="3" fill="#b89050" opacity=".7"/>
+  <path d="M298 280 Q320 272 342 280" fill="none" stroke="#c8a060" stroke-width="16" stroke-linecap="round" opacity=".85"/>
+
+  <!-- 감자 (배 안) 나란히 -->
+  <ellipse cx="480" cy="210" rx="55" ry="65" fill="#2a5080" opacity=".18"/>
+  <ellipse cx="480" cy="200" rx="42" ry="50" fill="#1e3c60" opacity=".2"/>
+  <circle cx="480" cy="182" r="22" fill="#3a6898" opacity=".2"/>
+  <ellipse cx="480" cy="208" rx="17" ry="20" fill="#3a6898" opacity=".2"/>
+  <!-- 감자 배 -->
+  <ellipse cx="480" cy="220" rx="50" ry="40" fill="#f5d8a8" opacity=".55"/>
+  <!-- 하트 -->
+  <path d="M471 205 Q471 197 480 202 Q489 197 489 205 Q489 214 480 220 Q471 214 471 205Z" fill="#f07080" opacity=".4"/>
+
+  <!-- 나란히 자란다는 연결선 -->
+  <path d="M368 200 Q420 188 462 195" fill="none" stroke="#7a9060" stroke-width="1.5" stroke-dasharray="5,4" opacity=".45"/>
+  <text x="380" y="183" font-size="11" fill="#5a7040" font-family="'Noto Sans KR',sans-serif" opacity=".8">함께 자라요</text>
+
+  <!-- 풀밭 -->
+  <ellipse cx="320" cy="278" rx="300" ry="14" fill="#88c848" opacity=".2"/>
+  <circle cx="148" cy="255" r="6" fill="#f7b2c0" opacity=".75"/>
+  <circle cx="168" cy="248" r="5" fill="#fcd97a" opacity=".75"/>
+</svg>
+<div class="ta">
+  <div class="pt">
+    레몬나무와 감자는<br>
+    같은 날, 함께 자라기 시작했어요.<br>
+    하나는 흙 속에서,<br>
+    하나는 엄마 배 속에서.
+  </div>
+  <div class="nr">
+    <button class="nb" onclick="go(-1)">← 이전</button>
+    <span class="ni">4 / 6</span>
+    <button class="nb" onclick="go(1)">다음 →</button>
+  </div>
+</div>
+</div>
+
+<!-- 5: 상상 — 감자 키만큼 자란 레몬나무 -->
+<div class="page" id="p5">
+<svg class="ill" viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="300" fill="#e0f2d8"/>
+  <ellipse cx="320" cy="0" rx="400" ry="130" fill="#c8ecca" opacity=".5"/>
+  <!-- 햇살 -->
+  <circle cx="320" cy="70" r="42" fill="#fff8c0" opacity=".4"/>
+  <circle cx="320" cy="70" r="27" fill="#fde87a" opacity=".85"/>
+  <line x1="320" y1="35" x2="320" y2="27" stroke="#f0c830" stroke-width="2.2" stroke-linecap="round" class="sunray"/>
+  <line x1="349" y1="43" x2="356" y2="36" stroke="#f0c830" stroke-width="2.2" stroke-linecap="round" class="sunray"/>
+  <line x1="291" y1="43" x2="284" y2="36" stroke="#f0c830" stroke-width="2.2" stroke-linecap="round" class="sunray"/>
+
+  <!-- 키 큰 레몬나무 (다 자란) -->
+  <g class="sway">
+    <rect x="245" y="140" width="14" height="155" rx="6" fill="#7a5030"/>
+    <ellipse cx="252" cy="122" rx="60" ry="56" fill="#3a8a20"/>
+    <ellipse cx="220" cy="105" rx="42" ry="38" fill="#4a9a28"/>
+    <ellipse cx="284" cy="110" rx="40" ry="36" fill="#3a8a20"/>
+    <!-- 레몬 많이 -->
+    <g class="lemon-bob">
+      <ellipse cx="272" cy="112" rx="14" ry="10" fill="#f5e040"/>
+      <ellipse cx="272" cy="112" rx="10" ry="7" fill="#fdf060"/>
+      <ellipse cx="232" cy="118" rx="13" ry="9" fill="#f0d830"/>
+      <ellipse cx="232" cy="118" rx="9" ry="6" fill="#fde850"/>
+      <ellipse cx="252" cy="100" rx="12" ry="8" fill="#f5e040"/>
+      <ellipse cx="252" cy="100" rx="8" ry="5.5" fill="#fdf060"/>
+    </g>
+    <!-- 꽃 -->
+    <circle cx="240" cy="95" r="6" fill="#fff" opacity=".9"/>
+    <circle cx="240" cy="95" r="3.5" fill="#fde87a" opacity=".85"/>
+    <circle cx="265" cy="88" r="5" fill="#fff" opacity=".85"/>
+    <circle cx="265" cy="88" r="3" fill="#fde87a" opacity=".8"/>
+  </g>
+
+  <!-- 감자 (아기) — 레몬나무 옆에 서 있는 -->
+  <!-- 아기 실루엣 -->
+  <ellipse cx="390" cy="258" rx="18" ry="10" fill="#f5d8b8" opacity=".8"/>
+  <ellipse cx="390" cy="235" rx="14" ry="22" fill="#f5d8b8" opacity=".85"/>
+  <circle cx="390" cy="213" r="18" fill="#f8e0c0" opacity=".9"/>
+  <!-- 머리카락 -->
+  <ellipse cx="390" cy="203" rx="16" ry="9" fill="#5a3820" opacity=".55"/>
+  <!-- 눈 -->
+  <circle cx="384" cy="212" r="2.5" fill="#3a2810" opacity=".8"/>
+  <circle cx="396" cy="212" r="2.5" fill="#3a2810" opacity=".8"/>
+  <!-- 볼 -->
+  <circle cx="381" cy="218" r="4" fill="#f09090" opacity=".35"/>
+  <circle cx="399" cy="218" r="4" fill="#f09090" opacity=".35"/>
+  <!-- 입 -->
+  <path d="M385 222 Q390 227 395 222" fill="none" stroke="#c07050" stroke-width="1.8" stroke-linecap="round"/>
+  <!-- 팔 레몬나무 만지는 -->
+  <path d="M376 238 Q358 245 310 248" fill="none" stroke="#f0c8a0" stroke-width="7" stroke-linecap="round" opacity=".8"/>
+
+  <!-- 키 높이 비교선 -->
+  <line x1="310" y1="140" x2="455" y2="140" stroke="#a0c880" stroke-width="1" stroke-dasharray="4,4" opacity=".5"/>
+  <line x1="455" y1="140" x2="455" y2="215" stroke="#a0c880" stroke-width="1" stroke-dasharray="4,4" opacity=".5"/>
+  <text x="460" y="180" font-size="10" fill="#5a7040" font-family="'Noto Sans KR',sans-serif" opacity=".8">감자 키</text>
+
+  <!-- 풀밭 -->
+  <rect x="0" y="268" width="640" height="32" fill="#88c848" opacity=".22"/>
+  <circle cx="160" cy="272" r="6" fill="#f7b2c0" opacity=".75"/>
+  <circle cx="520" cy="274" r="6" fill="#c9b2f7" opacity=".75"/>
+  <circle cx="538" cy="266" r="5" fill="#fcd97a" opacity=".75"/>
+
+  <!-- 말풍선 - 상상 표시 -->
+  <rect x="420" y="100" width="170" height="50" rx="14" fill="#fff" opacity=".7"/>
+  <polygon points="440,150 448,165 456,150" fill="#fff" opacity=".7"/>
+  <text x="435" y="122" font-size="11" fill="#5a7040" font-family="'Noto Sans KR',sans-serif">감자 키만큼</text>
+  <text x="435" y="140" font-size="11" fill="#5a7040" font-family="'Noto Sans KR',sans-serif">자라 있을 거야 🍋</text>
+</svg>
+<div class="ta">
+  <div class="pt">
+    감자가 태어날 즈음엔<br>
+    레몬나무도 감자만큼 자라 있을 거예요.<br>
+    그때 둘이 나란히 서 있는 모습을<br>
+    아빠는 미소 지으며 상상해요.
+  </div>
+  <div class="nr">
+    <button class="nb" onclick="go(-1)">← 이전</button>
+    <span class="ni">5 / 6</span>
+    <button class="nb" onclick="go(1)">다음 →</button>
+  </div>
+</div>
+</div>
+
+<!-- 6: 마지막 -->
+<div class="page" id="p6">
+<svg class="ill" viewBox="0 0 640 290" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="290" fill="#e8f5e0"/>
+  <ellipse cx="320" cy="0" rx="400" ry="120" fill="#d0ecc0" opacity=".5"/>
+  <!-- 해 -->
+  <circle cx="320" cy="68" r="40" fill="#fff8c0" opacity=".42"/>
+  <circle cx="320" cy="68" r="26" fill="#fde87a" opacity=".86"/>
+  <line x1="320" y1="32" x2="320" y2="24" stroke="#f0c830" stroke-width="2.2" stroke-linecap="round" class="sunray"/>
+  <line x1="349" y1="41" x2="356" y2="33" stroke="#f0c830" stroke-width="2.2" stroke-linecap="round" class="sunray"/>
+  <line x1="291" y1="41" x2="284" y2="33" stroke="#f0c830" stroke-width="2.2" stroke-linecap="round" class="sunray"/>
+  <line x1="358" y1="68" x2="366" y2="68" stroke="#f0c830" stroke-width="2.2" stroke-linecap="round" class="sunray"/>
+  <line x1="282" y1="68" x2="274" y2="68" stroke="#f0c830" stroke-width="2.2" stroke-linecap="round" class="sunray"/>
+
+  <!-- 레몬나무 + 큰 나무 함께 -->
+  <g class="sway2">
+    <rect x="195" y="160" width="12" height="115" rx="4" fill="#8a6030"/>
+    <ellipse cx="201" cy="145" rx="50" ry="46" fill="#4a9a28"/>
+    <ellipse cx="175" cy="132" rx="34" ry="30" fill="#5aaa32"/>
+    <ellipse cx="228" cy="136" rx="32" ry="28" fill="#4a9a28"/>
+    <g class="lemon-bob">
+      <ellipse cx="220" cy="138" rx="12" ry="8" fill="#f5e040"/>
+      <ellipse cx="220" cy="138" rx="8" ry="5.5" fill="#fdf060"/>
+      <ellipse cx="182" cy="144" rx="11" ry="7" fill="#f0d830"/>
+    </g>
+    <circle cx="195" cy="128" r="5" fill="#fff" opacity=".85"/>
+  </g>
+  <!-- 큰 나무 (가족나무) -->
+  <g class="sway">
+    <rect x="375" y="148" width="18" height="138" rx="6" fill="#6a4422"/>
+    <ellipse cx="384" cy="132" rx="70" ry="64" fill="#2e6618"/>
+    <ellipse cx="350" cy="116" rx="48" ry="44" fill="#388020"/>
+    <ellipse cx="418" cy="120" rx="46" ry="42" fill="#2e6618"/>
+    <path d="M374 116 Q374 107 384 113 Q394 107 394 116 Q394 126 384 133 Q374 126 374 116Z" fill="#f07080" opacity=".52"/>
+  </g>
+
+  <!-- 나비 -->
+  <ellipse cx="295" cy="145" rx="13" ry="7.5" fill="#f8e060" opacity=".75" transform="rotate(-20 295 145)"/>
+  <ellipse cx="276" cy="142" rx="12" ry="7" fill="#f8e060" opacity=".75" transform="rotate(20 276 142)"/>
+  <circle cx="286" cy="144" r="2.5" fill="#e0a020"/>
+
+  <!-- 풀밭 -->
+  <ellipse cx="320" cy="278" rx="310" ry="18" fill="#88c848" opacity=".22"/>
+  <circle cx="128" cy="258" r="6" fill="#f7b2c0" opacity=".8"/>
+  <circle cx="148" cy="250" r="5" fill="#fcd97a" opacity=".8"/>
+  <circle cx="505" cy="255" r="6" fill="#c9b2f7" opacity=".8"/>
+  <circle cx="524" cy="262" r="5" fill="#f7b2c0" opacity=".8"/>
+
+  <!-- 고구마별 -->
+  <circle cx="140" cy="45" r="6" fill="#ffdb60" opacity=".85"/>
+  <line x1="140" y1="31" x2="140" y2="24" stroke="#ffdb60" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="140" y1="59" x2="140" y2="66" stroke="#ffdb60" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="126" y1="45" x2="119" y2="45" stroke="#ffdb60" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="154" y1="45" x2="161" y2="45" stroke="#ffdb60" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="130" y1="34" x2="124" y2="28" stroke="#ffdb60" stroke-width="1.3" stroke-linecap="round"/>
+  <line x1="150" y1="56" x2="156" y2="62" stroke="#ffdb60" stroke-width="1.3" stroke-linecap="round"/>
+  <line x1="150" y1="34" x2="156" y2="28" stroke="#ffdb60" stroke-width="1.3" stroke-linecap="round"/>
+  <line x1="130" y1="56" x2="124" y2="62" stroke="#ffdb60" stroke-width="1.3" stroke-linecap="round"/>
+</svg>
+<div class="ta">
+  <div class="pt">
+    감자야,<br>
+    2026년 5월은 너 때문에<br>
+    세상에서 가장 싱그러웠어.<br>
+    <span style="color:#2d4a1e;font-weight:600;">어서 나와서, 레몬나무랑 인사해 🍋🌿</span>
+  </div>
+  <div class="nr">
+    <button class="nb" onclick="go(-1)">← 이전</button>
+    <span class="ni">끝</span>
+    <button class="nb" disabled>다음 →</button>
+  </div>
+</div>
+</div>
+
+</div>
+<script>
+let c = 0; const n = 7;
+function go(d) {
+  document.getElementById('p'+c).classList.remove('on');
+  c = Math.max(0, Math.min(n-1, c+d));
+  document.getElementById('p'+c).classList.add('on');
+}
+</script>
+</body>
+</html>

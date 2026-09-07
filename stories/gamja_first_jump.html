@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>감자의 첫 점프</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Serif KR', Georgia, serif; background: #1a1a2e; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 16px; }
+.book { max-width: 640px; width: 100%; background: #f9f6ef; border-radius: 18px; overflow: hidden; border: 1px solid #e0d8c8; box-shadow: 0 8px 40px rgba(0,0,0,0.4); }
+.page { display: none; flex-direction: column; }
+.page.on { display: flex; }
+.ill { width: 100%; flex-shrink: 0; }
+.ta { padding: 28px 34px 20px; background: #f9f6ef; display: flex; flex-direction: column; justify-content: space-between; gap: 14px; }
+.pt { font-size: 17px; line-height: 2.2; color: #3a2e1e; text-align: center; word-break: keep-all; }
+.nr { display: flex; align-items: center; justify-content: space-between; }
+.nb { background: none; border: 1px solid #c8b99a; border-radius: 8px; padding: 8px 22px; font-size: 14px; color: #7a6548; cursor: pointer; font-family: inherit; transition: background .15s; }
+.nb:hover { background: #ede5d4; }
+.nb:disabled { opacity: .3; cursor: default; }
+.ni { font-size: 12px; color: #a08c6a; font-family: 'Noto Sans KR', sans-serif; }
+.cover-ta { padding: 24px 34px 20px; background: #f9f6ef; text-align: center; display: flex; flex-direction: column; gap: 6px; }
+.ct { font-size: 26px; font-weight: 700; color: #2d4a1e; line-height: 1.5; }
+.cs { font-size: 13px; color: #7a9060; font-family: 'Noto Sans KR', sans-serif; }
+
+/* 점프 애니메이션 */
+.j-baby { animation: jmp 2.2s ease-in-out infinite; transform-origin: 200px 280px; }
+@keyframes jmp {
+  0%   { transform: translateY(0) scaleY(1); }
+  18%  { transform: translateY(3px) scaleY(.86); }
+  42%  { transform: translateY(-82px) scaleY(1.07); }
+  58%  { transform: translateY(-82px) scaleY(1.05); }
+  78%  { transform: translateY(3px) scaleY(.89); }
+  100% { transform: translateY(0) scaleY(1); }
+}
+.j-shad { animation: shd 2.2s ease-in-out infinite; transform-origin: 200px 305px; }
+@keyframes shd {
+  0%   { transform: scaleX(1); opacity:.35; }
+  18%  { transform: scaleX(.8); opacity:.45; }
+  42%  { transform: scaleX(.38); opacity:.1; }
+  58%  { transform: scaleX(.38); opacity:.1; }
+  78%  { transform: scaleX(.8); opacity:.45; }
+  100% { transform: scaleX(1); opacity:.35; }
+}
+.j-sp { animation: sp 2.2s ease-in-out infinite; }
+@keyframes sp { 0%,22%,78%,100%{opacity:0;} 42%,58%{opacity:1;} }
+.j-tr { animation: tr 2.2s ease-in-out infinite; }
+@keyframes tr { 0%,25%,75%,100%{opacity:0;} 42%,58%{opacity:.55;} }
+
+/* 눈물 애니메이션 (엄마 감동 장면) */
+.tear { animation: tearfall 2.5s ease-in-out infinite; }
+@keyframes tearfall {
+  0%   { transform: translateY(0); opacity: 0; }
+  20%  { opacity: 0; }
+  50%  { opacity: 1; }
+  100% { transform: translateY(18px); opacity: 0; }
+}
+.tear2 { animation: tearfall 2.5s ease-in-out .8s infinite; }
+
+/* 별 반짝 */
+.blink { animation: blk 3s ease-in-out infinite; }
+@keyframes blk { 0%,100%{opacity:.5;} 50%{opacity:1;} }
+.blink2 { animation: blk 3s ease-in-out .9s infinite; }
+.blink3 { animation: blk 3s ease-in-out 1.8s infinite; }
+</style>
+</head>
+<body>
+<div class="book">
+
+<!-- 표지 -->
+<div class="page on" id="p0">
+<svg class="ill" viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="300" fill="#0c1830"/>
+  <circle cx="60" cy="30" r="1.3" fill="#fff" opacity=".6" class="blink"/>
+  <circle cx="160" cy="18" r="1" fill="#fff" opacity=".55"/>
+  <circle cx="280" cy="38" r="1.5" fill="#fff" opacity=".7" class="blink2"/>
+  <circle cx="420" cy="20" r="1" fill="#fff" opacity=".55"/>
+  <circle cx="540" cy="34" r="1.3" fill="#fff" opacity=".6" class="blink3"/>
+  <circle cx="600" cy="18" r="1" fill="#fff" opacity=".5"/>
+  <circle cx="100" cy="65" r="1" fill="#fff" opacity=".4"/>
+  <circle cx="490" cy="58" r="1" fill="#fff" opacity=".45"/>
+  <!-- 고구마별 -->
+  <circle cx="320" cy="48" r="8" fill="#ffdb60"/>
+  <line x1="320" y1="31" x2="320" y2="24" stroke="#ffdb60" stroke-width="2" stroke-linecap="round"/>
+  <line x1="320" y1="65" x2="320" y2="72" stroke="#ffdb60" stroke-width="2" stroke-linecap="round"/>
+  <line x1="303" y1="48" x2="296" y2="48" stroke="#ffdb60" stroke-width="2" stroke-linecap="round"/>
+  <line x1="337" y1="48" x2="344" y2="48" stroke="#ffdb60" stroke-width="2" stroke-linecap="round"/>
+  <line x1="308" y1="36" x2="302" y2="29" stroke="#ffdb60" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="332" y1="60" x2="338" y2="67" stroke="#ffdb60" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="332" y1="36" x2="338" y2="29" stroke="#ffdb60" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="308" y1="60" x2="302" y2="67" stroke="#ffdb60" stroke-width="1.6" stroke-linecap="round"/>
+  <circle cx="320" cy="48" r="22" fill="#ffdb60" opacity=".07"/>
+  <!-- 아기 실루엣 작게 -->
+  <ellipse cx="320" cy="220" rx="40" ry="50" fill="#1e3c60" opacity=".6"/>
+  <ellipse cx="320" cy="215" rx="30" ry="38" fill="#2a5080" opacity=".4"/>
+  <circle cx="320" cy="192" r="18" fill="#f8e0c0" opacity=".85"/>
+  <ellipse cx="320" cy="225" rx="16" ry="20" fill="#f5d8b8" opacity=".85"/>
+  <!-- 작은 별빛 -->
+  <line x1="320" y1="68" x2="320" y2="175" stroke="#ffdb60" stroke-width=".8" stroke-dasharray="4,5" opacity=".2"/>
+  <!-- 땅 -->
+  <ellipse cx="320" cy="292" rx="280" ry="18" fill="#1a3860" opacity=".4"/>
+</svg>
+<div class="cover-ta">
+  <div class="ct">감자의 첫 점프</div>
+  <div class="cs">2025년 어느 날, 엄마가 처음 본 기적 🌿</div>
+</div>
+<div class="ta">
+  <div class="pt" style="font-size:14px;color:#7a6548;font-family:'Noto Sans KR',sans-serif;">그 작은 발로 쭉~ 뛰어오른 날의 이야기</div>
+  <div class="nr">
+    <button class="nb" disabled>← 이전</button>
+    <span class="ni">표지 · 5페이지</span>
+    <button class="nb" onclick="go(1)">다음 →</button>
+  </div>
+</div>
+</div>
+
+<!-- 1: 조용한 어느 날 -->
+<div class="page" id="p1">
+<svg class="ill" viewBox="0 0 640 270" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="270" fill="#0e1c38"/>
+  <circle cx="80" cy="28" r="1.2" fill="#fff" opacity=".55" class="blink"/>
+  <circle cx="200" cy="16" r="1.5" fill="#fff" opacity=".65" class="blink2"/>
+  <circle cx="400" cy="24" r="1" fill="#fff" opacity=".5"/>
+  <circle cx="560" cy="32" r="1.3" fill="#fff" opacity=".6" class="blink3"/>
+  <!-- 초음파 기계 화면 느낌 -->
+  <rect x="170" y="55" width="300" height="180" rx="10" fill="#0a1428" opacity=".9"/>
+  <rect x="178" y="63" width="284" height="164" rx="7" fill="#0d1e38" opacity=".95"/>
+  <!-- 스캔 라인 -->
+  <line x1="178" y1="80" x2="462" y2="80" stroke="#1a3060" stroke-width="1" opacity=".5"/>
+  <line x1="178" y1="100" x2="462" y2="100" stroke="#1a3060" stroke-width="1" opacity=".5"/>
+  <line x1="178" y1="120" x2="462" y2="120" stroke="#1a3060" stroke-width="1" opacity=".5"/>
+  <line x1="178" y1="140" x2="462" y2="140" stroke="#1a3060" stroke-width="1" opacity=".5"/>
+  <line x1="178" y1="160" x2="462" y2="160" stroke="#1a3060" stroke-width="1" opacity=".5"/>
+  <line x1="178" y1="180" x2="462" y2="180" stroke="#1a3060" stroke-width="1" opacity=".5"/>
+  <line x1="178" y1="200" x2="462" y2="200" stroke="#1a3060" stroke-width="1" opacity=".5"/>
+  <line x1="220" y1="63" x2="220" y2="227" stroke="#1a3060" stroke-width="1" opacity=".5"/>
+  <line x1="270" y1="63" x2="270" y2="227" stroke="#1a3060" stroke-width="1" opacity=".5"/>
+  <line x1="320" y1="63" x2="320" y2="227" stroke="#1a3060" stroke-width="1" opacity=".5"/>
+  <line x1="370" y1="63" x2="370" y2="227" stroke="#1a3060" stroke-width="1" opacity=".5"/>
+  <line x1="420" y1="63" x2="420" y2="227" stroke="#1a3060" stroke-width="1" opacity=".5"/>
+  <!-- 자궁 -->
+  <ellipse cx="320" cy="148" rx="100" ry="75" fill="#1a3a60" opacity=".6"/>
+  <ellipse cx="320" cy="148" rx="78" ry="58" fill="#224070" opacity=".5"/>
+  <!-- 아기 모습 (초음파 톤) -->
+  <circle cx="320" cy="128" r="22" fill="#3a6898" opacity=".7"/>
+  <ellipse cx="320" cy="155" rx="16" ry="18" fill="#3a6898" opacity=".65"/>
+  <!-- 초음파 텍스트 느낌 -->
+  <text x="182" y="78" font-size="8" fill="#3a6898" font-family="monospace" opacity=".7">BPM 160</text>
+  <text x="390" y="78" font-size="8" fill="#3a6898" font-family="monospace" opacity=".7">10W+6D</text>
+  <!-- 엄마 실루엣 옆에 누워 -->
+  <ellipse cx="90" cy="220" rx="60" ry="18" fill="#2a3a58" opacity=".6"/>
+  <circle cx="90" cy="202" r="14" fill="#2a3a58" opacity=".6"/>
+  <!-- 기계 버튼들 -->
+  <rect x="480" y="100" width="60" height="80" rx="5" fill="#182040" opacity=".8"/>
+  <circle cx="510" cy="120" r="6" fill="#2a4070" opacity=".8"/>
+  <circle cx="510" cy="140" r="6" fill="#2a4070" opacity=".8"/>
+  <circle cx="510" cy="160" r="6" fill="#3a6898" opacity=".8"/>
+</svg>
+<div class="ta">
+  <div class="pt">
+    조용한 검사실에서<br>
+    엄마는 작은 화면을 바라봤어요.<br>
+    그 안에 감자가 있었어요.
+  </div>
+  <div class="nr">
+    <button class="nb" onclick="go(-1)">← 이전</button>
+    <span class="ni">1 / 5</span>
+    <button class="nb" onclick="go(1)">다음 →</button>
+  </div>
+</div>
+</div>
+
+<!-- 2: 점프! -->
+<div class="page" id="p2">
+<svg class="ill" viewBox="0 0 640 310" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="g2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffe87a" stop-opacity="0.13"/>
+      <stop offset="100%" stop-color="#ffe87a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="640" height="310" fill="#0c1830"/>
+  <circle cx="70" cy="26" r="1.2" fill="#fff" opacity=".55" class="blink"/>
+  <circle cx="190" cy="14" r="1.5" fill="#fff" opacity=".65" class="blink2"/>
+  <circle cx="440" cy="22" r="1" fill="#fff" opacity=".5"/>
+  <circle cx="580" cy="30" r="1.3" fill="#fff" opacity=".6" class="blink3"/>
+  <circle cx="540" cy="60" r="1" fill="#fff" opacity=".45"/>
+  <!-- 고구마별 -->
+  <circle cx="520" cy="44" r="7" fill="#ffdb60"/>
+  <line x1="520" y1="29" x2="520" y2="22" stroke="#ffdb60" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="520" y1="59" x2="520" y2="66" stroke="#ffdb60" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="505" y1="44" x2="498" y2="44" stroke="#ffdb60" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="535" y1="44" x2="542" y2="44" stroke="#ffdb60" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="509" y1="33" x2="504" y2="27" stroke="#ffdb60" stroke-width="1.4" stroke-linecap="round"/>
+  <line x1="531" y1="55" x2="536" y2="61" stroke="#ffdb60" stroke-width="1.4" stroke-linecap="round"/>
+  <line x1="531" y1="33" x2="536" y2="27" stroke="#ffdb60" stroke-width="1.4" stroke-linecap="round"/>
+  <line x1="509" y1="55" x2="504" y2="61" stroke="#ffdb60" stroke-width="1.4" stroke-linecap="round"/>
+  <circle cx="520" cy="44" r="20" fill="#ffdb60" opacity=".07"/>
+  <!-- 점프 궤적 -->
+  <ellipse class="j-tr" cx="200" cy="218" rx="7" ry="13" fill="#c8f0a0"/>
+  <ellipse class="j-tr" cx="200" cy="240" rx="5" ry="8" fill="#c8f0a0" opacity=".7"/>
+  <ellipse class="j-tr" cx="200" cy="258" rx="3" ry="5" fill="#c8f0a0" opacity=".4"/>
+  <!-- 스파클 -->
+  <g class="j-sp">
+    <circle cx="160" cy="205" r="4" fill="#ffe87a"/>
+    <circle cx="242" cy="198" r="3.5" fill="#ffe87a"/>
+    <circle cx="144" cy="228" r="3" fill="#c8f8a0"/>
+    <circle cx="258" cy="222" r="3" fill="#c8f8a0"/>
+    <circle cx="172" cy="185" r="2.5" fill="#fff8c0"/>
+    <circle cx="228" cy="180" r="2.5" fill="#fff8c0"/>
+    <circle cx="200" cy="173" r="3" fill="#ffe87a"/>
+  </g>
+  <!-- 그림자 -->
+  <ellipse class="j-shad" cx="200" cy="305" rx="32" ry="7" fill="#1a3860"/>
+  <!-- 아기 점프 -->
+  <g class="j-baby">
+    <ellipse cx="200" cy="272" rx="58" ry="48" fill="#1e3c60" opacity=".5"/>
+    <ellipse cx="200" cy="272" rx="44" ry="35" fill="#2a5080" opacity=".35"/>
+    <!-- 다리 쭉 -->
+    <path d="M185 285 Q172 296 165 308" fill="none" stroke="#f0c8a0" stroke-width="7.5" stroke-linecap="round"/>
+    <ellipse cx="162" cy="311" rx="9" ry="5.5" fill="#f0c8a0"/>
+    <path d="M215 285 Q228 296 235 308" fill="none" stroke="#f0c8a0" stroke-width="7.5" stroke-linecap="round"/>
+    <ellipse cx="238" cy="311" rx="9" ry="5.5" fill="#f0c8a0"/>
+    <!-- 몸통 -->
+    <ellipse cx="200" cy="265" rx="25" ry="29" fill="#f5d8b8"/>
+    <ellipse cx="200" cy="258" rx="20" ry="24" fill="#f8e2c2"/>
+    <!-- 팔 번쩍! -->
+    <path d="M177 256 Q161 240 154 228" fill="none" stroke="#f0c8a0" stroke-width="7" stroke-linecap="round"/>
+    <ellipse cx="151" cy="224" rx="6.5" ry="5" fill="#f0c8a0"/>
+    <path d="M223 256 Q239 240 246 228" fill="none" stroke="#f0c8a0" stroke-width="7" stroke-linecap="round"/>
+    <ellipse cx="249" cy="224" rx="6.5" ry="5" fill="#f0c8a0"/>
+    <!-- 머리 -->
+    <circle cx="200" cy="233" r="24" fill="#f8e0c0"/>
+    <ellipse cx="176" cy="235" rx="6" ry="8" fill="#f5d4b0"/>
+    <ellipse cx="224" cy="235" rx="6" ry="8" fill="#f5d4b0"/>
+    <!-- 눈 꼭 감음 신남 -->
+    <path d="M189 231 Q193 227 197 231" fill="none" stroke="#8a6040" stroke-width="2.2" stroke-linecap="round"/>
+    <path d="M203 231 Q207 227 211 231" fill="none" stroke="#8a6040" stroke-width="2.2" stroke-linecap="round"/>
+    <!-- 볼 -->
+    <circle cx="185" cy="238" r="5.5" fill="#f09090" opacity=".38"/>
+    <circle cx="215" cy="238" r="5.5" fill="#f09090" opacity=".38"/>
+    <!-- 입 활짝 -->
+    <path d="M192 243 Q200 251 208 243" fill="none" stroke="#c07050" stroke-width="2.2" stroke-linecap="round"/>
+    <!-- 태줄 -->
+    <path d="M200 291 Q200 300 200 304" fill="none" stroke="#d4a878" stroke-width="2.5" stroke-linecap="round" opacity=".4"/>
+  </g>
+  <circle cx="200" cy="240" r="90" fill="url(#g2)"/>
+  <!-- 별빛 응원 선 -->
+  <path d="M514 60 Q400 140 258 228" fill="none" stroke="#ffdb60" stroke-width=".8" stroke-dasharray="4,6" opacity=".25"/>
+</svg>
+<div class="ta">
+  <div class="pt">
+    그런데 갑자기!<br>
+    감자가 그 작은 관절로 발을 디디더니<br>
+    <span style="font-size:20px;color:#2d4a1e;font-weight:700;">쭉~!</span><br>
+    위로 힘차게 뛰어올랐어요.
+  </div>
+  <div class="nr">
+    <button class="nb" onclick="go(-1)">← 이전</button>
+    <span class="ni">2 / 5</span>
+    <button class="nb" onclick="go(1)">다음 →</button>
+  </div>
+</div>
+</div>
+
+<!-- 3: 엄마의 감동 -->
+<div class="page" id="p3">
+<svg class="ill" viewBox="0 0 640 270" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="270" fill="#e8f2fa"/>
+  <ellipse cx="320" cy="0" rx="320" ry="90" fill="#d0e8f8" opacity=".4"/>
+  <!-- 엄마 얼굴 -->
+  <ellipse cx="260" cy="185" rx="50" ry="65" fill="#4a6278" opacity=".75"/>
+  <circle cx="260" cy="140" r="38" fill="#f8e0c0"/>
+  <ellipse cx="238" cy="143" rx="7" ry="9" fill="#f5d4b0"/>
+  <ellipse cx="282" cy="143" rx="7" ry="9" fill="#f5d4b0"/>
+  <!-- 눈 (감격해서 눈물) -->
+  <path d="M248 136 Q253 131 258 136" fill="none" stroke="#6a4830" stroke-width="2" stroke-linecap="round"/>
+  <path d="M262 136 Q267 131 272 136" fill="none" stroke="#6a4830" stroke-width="2" stroke-linecap="round"/>
+  <!-- 눈물 -->
+  <ellipse class="tear" cx="248" cy="143" rx="2.5" ry="3.5" fill="#90c8e8" opacity=".8"/>
+  <ellipse class="tear2" cx="272" cy="143" rx="2.5" ry="3.5" fill="#90c8e8" opacity=".8"/>
+  <!-- 볼 (빨개짐) -->
+  <circle cx="243" cy="148" r="8" fill="#f09090" opacity=".35"/>
+  <circle cx="277" cy="148" r="8" fill="#f09090" opacity=".35"/>
+  <!-- 입 (감격 표정) -->
+  <path d="M252 155 Q260 162 268 155" fill="none" stroke="#c07050" stroke-width="2" stroke-linecap="round"/>
+  <!-- 손 가슴에 -->
+  <path d="M230 195 Q250 185 270 195" fill="none" stroke="#4a6278" stroke-width="12" stroke-linecap="round" opacity=".7"/>
+  <!-- 하트 -->
+  <path d="M252 188 Q252 181 260 186 Q268 181 268 188 Q268 196 260 202 Q252 196 252 188Z" fill="#f07080" opacity=".6"/>
+  <!-- 초음파 화면 오른쪽 -->
+  <rect x="370" y="80" width="220" height="155" rx="10" fill="#0a1428" opacity=".85"/>
+  <rect x="378" y="88" width="204" height="139" rx="7" fill="#0d1e38" opacity=".95"/>
+  <!-- 화면 속 감자 점프 실루엣 -->
+  <circle cx="480" cy="132" r="18" fill="#3a6898" opacity=".7"/>
+  <ellipse cx="480" cy="158" rx="14" ry="16" fill="#3a6898" opacity=".65"/>
+  <!-- 팔 위로 -->
+  <path d="M467 150 Q457 140 453 132" fill="none" stroke="#3a6898" stroke-width="5" stroke-linecap="round" opacity=".7"/>
+  <path d="M493 150 Q503 140 507 132" fill="none" stroke="#3a6898" stroke-width="5" stroke-linecap="round" opacity=".7"/>
+  <!-- 다리 쭉 -->
+  <path d="M473 172 Q466 182 462 190" fill="none" stroke="#3a6898" stroke-width="5" stroke-linecap="round" opacity=".7"/>
+  <path d="M487 172 Q494 182 498 190" fill="none" stroke="#3a6898" stroke-width="5" stroke-linecap="round" opacity=".7"/>
+</svg>
+<div class="ta">
+  <div class="pt">
+    엄마는 너무 감격해서<br>
+    눈물이 났어요.<br>
+    그 작은 몸으로 이렇게 힘차게<br>
+    살아있다고 말해주다니.
+  </div>
+  <div class="nr">
+    <button class="nb" onclick="go(-1)">← 이전</button>
+    <span class="ni">3 / 5</span>
+    <button class="nb" onclick="go(1)">다음 →</button>
+  </div>
+</div>
+</div>
+
+<!-- 4: 고구마별도 봤어 -->
+<div class="page" id="p4">
+<svg class="ill" viewBox="0 0 640 270" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="270" fill="#0a1228"/>
+  <circle cx="60" cy="26" r="1.2" fill="#fff" opacity=".55" class="blink"/>
+  <circle cx="180" cy="15" r="1" fill="#fff" opacity=".5"/>
+  <circle cx="380" cy="28" r="1.5" fill="#fff" opacity=".65" class="blink2"/>
+  <circle cx="540" cy="18" r="1" fill="#fff" opacity=".5"/>
+  <circle cx="610" cy="42" r="1.2" fill="#fff" opacity=".6" class="blink3"/>
+  <circle cx="440" cy="55" r="1" fill="#fff" opacity=".42"/>
+  <circle cx="95" cy="58" r="1" fill="#fff" opacity=".38"/>
+  <!-- 고구마별 크고 밝게 -->
+  <circle cx="320" cy="60" r="10" fill="#ffdb60"/>
+  <line x1="320" y1="40" x2="320" y2="31" stroke="#ffdb60" stroke-width="2.2" stroke-linecap="round"/>
+  <line x1="320" y1="80" x2="320" y2="89" stroke="#ffdb60" stroke-width="2.2" stroke-linecap="round"/>
+  <line x1="300" y1="60" x2="291" y2="60" stroke="#ffdb60" stroke-width="2.2" stroke-linecap="round"/>
+  <line x1="340" y1="60" x2="349" y2="60" stroke="#ffdb60" stroke-width="2.2" stroke-linecap="round"/>
+  <line x1="306" y1="46" x2="299" y2="38" stroke="#ffdb60" stroke-width="1.7" stroke-linecap="round"/>
+  <line x1="334" y1="74" x2="341" y2="82" stroke="#ffdb60" stroke-width="1.7" stroke-linecap="round"/>
+  <line x1="334" y1="46" x2="341" y2="38" stroke="#ffdb60" stroke-width="1.7" stroke-linecap="round"/>
+  <line x1="306" y1="74" x2="299" y2="82" stroke="#ffdb60" stroke-width="1.7" stroke-linecap="round"/>
+  <circle cx="320" cy="60" r="28" fill="#ffdb60" opacity=".09"/>
+  <circle cx="320" cy="60" r="42" fill="#ffdb60" opacity=".04"/>
+  <!-- 별빛 감자에게 -->
+  <path d="M320 89 Q320 155 320 220" fill="none" stroke="#ffdb60" stroke-width="1.2" stroke-dasharray="5,6" opacity=".3"/>
+  <!-- 감자 (위에서 내려오는 빛 받으며) -->
+  <ellipse cx="320" cy="230" rx="50" ry="42" fill="#1e3c60" opacity=".5"/>
+  <ellipse cx="320" cy="230" rx="38" ry="30" fill="#2a5080" opacity=".35"/>
+  <circle cx="320" cy="210" r="20" fill="#f8e0c0" opacity=".9"/>
+  <ellipse cx="320" cy="238" rx="17" ry="20" fill="#f5d8b8" opacity=".9"/>
+  <!-- 아기 팔 위로 (빛 받는 듯) -->
+  <path d="M305 225 Q294 212 289 202" fill="none" stroke="#f0c8a0" stroke-width="6" stroke-linecap="round" opacity=".9"/>
+  <path d="M335 225 Q346 212 351 202" fill="none" stroke="#f0c8a0" stroke-width="6" stroke-linecap="round" opacity=".9"/>
+  <!-- 눈 -->
+  <path d="M312 208 Q316 204 320 208" fill="none" stroke="#8a6040" stroke-width="1.8" stroke-linecap="round" opacity=".9"/>
+  <path d="M320 208 Q324 204 328 208" fill="none" stroke="#8a6040" stroke-width="1.8" stroke-linecap="round" opacity=".9"/>
+  <!-- 입 -->
+  <path d="M315 215 Q320 220 325 215" fill="none" stroke="#c07050" stroke-width="1.8" stroke-linecap="round" opacity=".9"/>
+  <!-- 별빛 받는 스파클 -->
+  <circle cx="300" cy="195" r="2.5" fill="#ffe87a" opacity=".7" class="blink"/>
+  <circle cx="340" cy="193" r="2" fill="#ffe87a" opacity=".6" class="blink2"/>
+  <circle cx="320" cy="185" r="2.5" fill="#fff8c0" opacity=".65" class="blink3"/>
+</svg>
+<div class="ta">
+  <div class="pt">
+    하늘의 고구마 별도<br>
+    그 순간을 봤을 거예요.<br>
+    "잘한다, 감자야!"<br>
+    반짝반짝 빛을 보내며 응원했을 거예요.
+  </div>
+  <div class="nr">
+    <button class="nb" onclick="go(-1)">← 이전</button>
+    <span class="ni">4 / 5</span>
+    <button class="nb" onclick="go(1)">다음 →</button>
+  </div>
+</div>
+</div>
+
+<!-- 5: 마지막 -->
+<div class="page" id="p5">
+<svg class="ill" viewBox="0 0 640 270" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="270" fill="#0c1830"/>
+  <circle cx="60" cy="25" r="1.2" fill="#fff" opacity=".6" class="blink"/>
+  <circle cx="180" cy="14" r="1" fill="#fff" opacity=".5"/>
+  <circle cx="320" cy="30" r="1.5" fill="#fff" opacity=".7" class="blink2"/>
+  <circle cx="480" cy="18" r="1" fill="#fff" opacity=".5"/>
+  <circle cx="600" cy="32" r="1.2" fill="#fff" opacity=".6" class="blink3"/>
+  <circle cx="110" cy="58" r="1" fill="#fff" opacity=".4"/>
+  <circle cx="555" cy="55" r="1" fill="#fff" opacity=".42"/>
+  <!-- 고구마별 -->
+  <circle cx="160" cy="48" r="7" fill="#ffdb60" opacity=".9"/>
+  <line x1="160" y1="33" x2="160" y2="26" stroke="#ffdb60" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="160" y1="63" x2="160" y2="70" stroke="#ffdb60" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="145" y1="48" x2="138" y2="48" stroke="#ffdb60" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="175" y1="48" x2="182" y2="48" stroke="#ffdb60" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="149" y1="37" x2="143" y2="30" stroke="#ffdb60" stroke-width="1.4" stroke-linecap="round"/>
+  <line x1="171" y1="59" x2="177" y2="66" stroke="#ffdb60" stroke-width="1.4" stroke-linecap="round"/>
+  <line x1="171" y1="37" x2="177" y2="30" stroke="#ffdb60" stroke-width="1.4" stroke-linecap="round"/>
+  <line x1="149" y1="59" x2="143" y2="66" stroke="#ffdb60" stroke-width="1.4" stroke-linecap="round"/>
+  <circle cx="160" cy="48" r="20" fill="#ffdb60" opacity=".07"/>
+  <!-- 큰 나무 -->
+  <rect x="310" y="125" width="28" height="140" rx="6" fill="#6a4422"/>
+  <ellipse cx="324" cy="116" rx="78" ry="72" fill="#2e6618"/>
+  <ellipse cx="286" cy="100" rx="52" ry="48" fill="#388020"/>
+  <ellipse cx="364" cy="104" rx="50" ry="46" fill="#2e6618"/>
+  <path d="M312 100 Q312 91 324 97 Q336 91 336 100 Q336 110 324 118 Q312 110 312 100Z" fill="#f07080" opacity=".55"/>
+  <!-- 땅 -->
+  <ellipse cx="324" cy="263" rx="280" ry="18" fill="#1a3810" opacity=".4"/>
+  <!-- 반딧불 -->
+  <circle cx="230" cy="185" r="2.5" fill="#f5e060" opacity=".7" class="blink"/>
+  <circle cx="420" cy="180" r="2" fill="#f5e060" opacity=".6" class="blink2"/>
+  <circle cx="260" cy="165" r="2" fill="#f5e060" opacity=".5" class="blink3"/>
+  <!-- 별빛 → 나무 -->
+  <path d="M166 63 Q236 118 310 100" fill="none" stroke="#ffdb60" stroke-width=".8" stroke-dasharray="3,6" opacity=".25"/>
+</svg>
+<div class="ta">
+  <div class="pt">
+    감자야,<br>
+    오늘 네가 뛰어오른 그 순간<br>
+    엄마는 세상에서 가장 행복했어.<br>
+    <span style="color:#7a5230;font-size:15px;">빨리 만나고 싶어. 🌿</span>
+  </div>
+  <div class="nr">
+    <button class="nb" onclick="go(-1)">← 이전</button>
+    <span class="ni">끝</span>
+    <button class="nb" disabled>다음 →</button>
+  </div>
+</div>
+</div>
+
+</div>
+<script>
+let c = 0;
+const n = 6;
+function go(d) {
+  document.getElementById('p'+c).classList.remove('on');
+  c = Math.max(0, Math.min(n-1, c+d));
+  document.getElementById('p'+c).classList.add('on');
+}
+</script>
+</body>
+</html>

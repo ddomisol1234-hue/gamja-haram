@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>감자·하람 동화도서관</title>
+<meta name="description" content="뱃속에서 자라는 우리 아들 하람이의 이야기들">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Noto+Sans+KR:wght@300;400;500&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy: #0c1830; --gold: #ffdb60; --blue: #5a9ad8;
+  --cream: #f9f6ef; --text: #3a2e1e;
+}
+body { font-family: 'Noto Sans KR', sans-serif; background: var(--navy); color: var(--cream); min-height: 100vh; }
+
+/* 헤더 */
+.header { position: relative; background: linear-gradient(180deg,#070e1e,#0c1830); padding: 52px 24px 40px; text-align: center; overflow: hidden; }
+.header::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 50% 60%,rgba(90,154,216,.12),transparent 70%); }
+.goguma { display:inline-block; animation: pop 2.5s ease-in-out infinite; margin-bottom:12px; }
+@keyframes pop { 0%,100%{transform:scale(1);} 50%{transform:scale(1.12);} }
+.header h1 { font-family:'Noto Serif KR',serif; font-size:clamp(22px,5vw,32px); font-weight:700; color:#fff; line-height:1.4; position:relative; }
+.header .sub { font-size:13px; color:#9ab8d8; margin-top:8px; position:relative; }
+.badge { display:inline-block; margin-top:14px; background:rgba(90,154,216,.18); border:1px solid rgba(90,154,216,.3); border-radius:20px; padding:4px 18px; font-size:12px; color:#7ab8f0; position:relative; }
+
+/* 진행바 */
+.prog-wrap { padding:18px 20px 4px; max-width:960px; margin:0 auto; }
+.prog-label { display:flex; justify-content:space-between; font-size:12px; color:#6a8898; margin-bottom:7px; }
+.prog-bar { height:5px; background:rgba(255,255,255,.08); border-radius:3px; overflow:hidden; }
+.prog-fill { height:100%; background:linear-gradient(90deg,#5a9ad8,#ffdb60); border-radius:3px; }
+
+/* 필터 */
+.filters { display:flex; gap:8px; padding:14px 16px; overflow-x:auto; background:rgba(255,255,255,.03); border-bottom:1px solid rgba(255,255,255,.06); scrollbar-width:none; }
+.filters::-webkit-scrollbar { display:none; }
+.fbtn { flex-shrink:0; padding:5px 15px; border-radius:20px; border:1px solid rgba(255,255,255,.15); background:none; color:#9ab8d8; font-size:12px; font-family:inherit; cursor:pointer; transition:all .2s; white-space:nowrap; }
+.fbtn:hover,.fbtn.on { background:rgba(90,154,216,.25); border-color:#5a9ad8; color:#fff; }
+
+/* 그리드 */
+.grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(270px,1fr)); gap:18px; padding:20px 16px 50px; max-width:960px; margin:0 auto; }
+
+/* 카드 */
+.card { background:linear-gradient(145deg,#1a2e4a,#0e1e38); border:1px solid rgba(90,154,216,.2); border-radius:16px; overflow:hidden; cursor:pointer; transition:transform .25s,box-shadow .25s,border-color .25s; display:flex; flex-direction:column; }
+.card:hover { transform:translateY(-5px); box-shadow:0 12px 40px rgba(90,154,216,.22); border-color:rgba(90,154,216,.45); }
+.thumb { width:100%; height:140px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.thumb svg { width:100%; height:100%; }
+.body { padding:13px 15px 15px; display:flex; flex-direction:column; gap:5px; flex:1; }
+.num { font-size:10px; color:#5a9ad8; font-weight:500; letter-spacing:.05em; }
+.title { font-family:'Noto Serif KR',serif; font-size:16px; font-weight:700; color:#fff; line-height:1.45; }
+.date { font-size:11px; color:#6a8898; }
+.desc { font-size:12px; color:#8aaccb; line-height:1.7; margin-top:2px; }
+.pages { font-size:11px; color:#5a7888; margin-top:auto; padding-top:8px; }
+.tag { display:inline-block; padding:2px 10px; border-radius:10px; font-size:10px; margin-top:4px; font-weight:500; }
+
+/* 모달 */
+.modal-bg { display:none; position:fixed; inset:0; background:rgba(0,0,0,.8); z-index:100; align-items:center; justify-content:center; padding:12px; }
+.modal-bg.open { display:flex; }
+.modal { background:#f9f6ef; border-radius:18px; width:100%; max-width:680px; max-height:92vh; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 20px 60px rgba(0,0,0,.6); }
+.mhead { display:flex; align-items:center; justify-content:space-between; padding:14px 18px; background:#1a3a6a; color:#fff; flex-shrink:0; }
+.mhead h2 { font-family:'Noto Serif KR',serif; font-size:17px; }
+.mclose { background:none; border:none; color:#9ab8d8; font-size:22px; cursor:pointer; padding:4px 8px; border-radius:8px; }
+.mclose:hover { background:rgba(255,255,255,.1); }
+.mframe { flex:1; width:100%; border:none; min-height:480px; }
+
+/* 푸터 */
+footer { text-align:center; padding:24px; font-size:12px; color:#4a6078; border-top:1px solid rgba(255,255,255,.06); }
+
+/* 별 */
+.stars { position:fixed; inset:0; pointer-events:none; z-index:0; }
+.star { position:absolute; border-radius:50%; background:#fff; animation:twinkle 3s ease-in-out infinite; }
+@keyframes twinkle { 0%,100%{opacity:.2;} 50%{opacity:.8;} }
+</style>
+</head>
+<body>
+<div class="stars" id="stars"></div>
+
+<header class="header">
+  <div class="goguma">
+    <svg width="44" height="44" viewBox="0 0 44 44">
+      <circle cx="22" cy="22" r="11" fill="#ffdb60"/>
+      <line x1="22" y1="5" x2="22" y2="0" stroke="#ffdb60" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="22" y1="39" x2="22" y2="44" stroke="#ffdb60" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="5" y1="22" x2="0" y2="22" stroke="#ffdb60" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="39" y1="22" x2="44" y2="22" stroke="#ffdb60" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="10" y1="10" x2="6" y2="6" stroke="#ffdb60" stroke-width="2" stroke-linecap="round"/>
+      <line x1="34" y1="34" x2="38" y2="38" stroke="#ffdb60" stroke-width="2" stroke-linecap="round"/>
+      <line x1="34" y1="10" x2="38" y2="6" stroke="#ffdb60" stroke-width="2" stroke-linecap="round"/>
+      <line x1="10" y1="34" x2="6" y2="38" stroke="#ffdb60" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <h1>감자·하람 동화도서관</h1>
+  <p class="sub">뱃속에서 자라는 우리 아들의 이야기들</p>
+  <span class="badge">2026년 봄→겨울 · 총 <span id="total">0</span>편</span>
+</header>
+
+<div class="prog-wrap">
+  <div class="prog-label"><span>임신 10주차 시작</span><span>12월 출산 예정 💙</span></div>
+  <div class="prog-bar"><div class="prog-fill" style="width:72%"></div></div>
+</div>
+
+<div class="filters">
+  <button class="fbtn on" onclick="filter('all',this)">전체 📚</button>
+  <button class="fbtn" onclick="filter('감사',this)">감사 🌿</button>
+  <button class="fbtn" onclick="filter('태동',this)">태동 🐟</button>
+  <button class="fbtn" onclick="filter('여행',this)">여행 ✈️</button>
+  <button class="fbtn" onclick="filter('음악',this)">음악 🎶</button>
+  <button class="fbtn" onclick="filter('일상',this)">일상 ☀️</button>
+  <button class="fbtn" onclick="filter('성장',this)">성장 🌱</button>
+</div>
+
+<main class="grid" id="grid"></main>
+
+<div class="modal-bg" id="modal" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="mhead">
+      <h2 id="mtitle">동화책</h2>
+      <button class="mclose" onclick="closeBook()">✕</button>
+    </div>
+    <iframe class="mframe" id="mframe" src="" title="동화책"></iframe>
+  </div>
+</div>
+
+<footer>
+  감자야, 하람아 — 이 이야기들은 평생 네 곁에 있을 거야 💙<br>
+  <span style="color:#3a5068;font-size:11px;margin-top:4px;display:block;">고구마별 ✦ 감자와 눈사람 여성의원 · 김영상 원장님께</span>
+</footer>
+
+<script>
+// ── 동화 데이터 ──────────────────────────────────────
+// 새 동화 추가할 때: 이 배열에 항목 하나만 추가하면 끝!
+const STORIES = [
+  {
+    num:"01", file:"stories/gamja_gratitude_dr_kim.html",
+    title:"김영상 원장님께", date:"임신 초기", pages:16,
+    tags:["감사"],
+    desc:"10번 넘는 시험관 끝에 만난 기적. 감자와 눈사람 여성의원, 원장님께 드리는 감사 이야기.",
+    color:"#0c1830", emoji:"🌿"
+  },
+  {
+    num:"02", file:"stories/gamja_morning_routine.html",
+    title:"하이베베 아침 루틴", date:"5월", pages:7,
+    tags:["일상"],
+    desc:"매일 아침 하이베베로 감자 심장소리 듣는 엄마의 소중한 아침 의식.",
+    color:"#e8f3e0", emoji:"💚"
+  },
+  {
+    num:"03", file:"stories/lemon_tree_may.html",
+    title:"5월의 레몬나무", date:"5월", pages:7,
+    tags:["일상","성장"],
+    desc:"감자가 오던 때 아빠가 심은 레몬나무. 함께 무럭무럭 자라는 봄 이야기.",
+    color:"#e8f3e0", emoji:"🍋"
+  },
+  {
+    num:"04", file:"stories/gamja_first_jump.html",
+    title:"감자의 첫 점프", date:"5월", pages:6,
+    tags:["태동"],
+    desc:"쭉— 뛰어오른 감자의 첫 번째 점프 순간. 엄마가 목격한 기적.",
+    color:"#0e1c38", emoji:"💫"
+  },
+  {
+    num:"05", file:"stories/gamja_diary_may.html",
+    title:"6월 1일 엄마 일기", date:"6월 1일", pages:8,
+    tags:["일상"],
+    desc:"출장·야근 속 아빠가 끓여놓은 참치김치찌개. 아빠 본사 발령 고민.",
+    color:"#2a1808", emoji:"🍲"
+  },
+  {
+    num:"06", file:"stories/gamja_little_bird_june.html",
+    title:"6월의 작은 새", date:"6월", pages:6,
+    tags:["일상"],
+    desc:"거실 창가에 날아온 작은 새. 감자의 친구 같은 귀여운 생명체.",
+    color:"#e0f2e8", emoji:"🐦"
+  },
+  {
+    num:"07", file:"stories/gamja_its_a_boy.html",
+    title:"아들이에요! 💙", date:"성별 공개", pages:7,
+    tags:["성장"],
+    desc:"산부인과에서 확인한 감자의 성별. 파란 리본을 단 우리 아들!",
+    color:"#0e1c38", emoji:"💙"
+  },
+  {
+    num:"08", file:"stories/gamja_18weeks_taedong.html",
+    title:"꾸물꾸물, 18주차", date:"18주차 · 7월", pages:7,
+    tags:["태동"],
+    desc:"물고기처럼 꾸물꾸물 첫 태동. '사랑해' 했더니 역대급 태동 메들리!",
+    color:"#0e1c38", emoji:"🐟"
+  },
+  {
+    num:"09", file:"stories/gamja_haramaaa.html",
+    title:"하람아, 안녕 💙", date:"20주차", pages:7,
+    tags:["태동","성장"],
+    desc:"탯줄 비비꼬며 혼자 노는 하람이. 웃는 초음파 얼굴. 이름 공개!",
+    color:"#0c1830", emoji:"✨"
+  },
+  {
+    num:"10", file:"stories/gamja_orchestra_concert.html",
+    title:"하람이의 첫 공연", date:"8월 1일", pages:7,
+    tags:["음악","일상"],
+    desc:"외할머니랑 간 오케스트라. 탯줄을 기타 삼아 치는 하람이 상상.",
+    color:"#100820", emoji:"🎸"
+  },
+  {
+    num:"11", file:"stories/gamja_mom_diary2.html",
+    title:"엄마의 요즘", date:"임신 중반", pages:6,
+    tags:["일상"],
+    desc:"맛있게 먹고, 쓸고 닦고, 좋은 사람이 되고 싶은 엄마. 가끔 불안하기도 해.",
+    color:"#2a1808", emoji:"🌿"
+  },
+  {
+    num:"12", file:"stories/gamja_promotion.html",
+    title:"복덩이 하람이", date:"8월", pages:5,
+    tags:["성장","일상"],
+    desc:"하람이가 오고 엄마 승진! 좋은 일만 가득. 다 네 덕분이야.",
+    color:"#0c1830", emoji:"🌟"
+  },
+  {
+    num:"13", file:"stories/gamja_liberation_day.html",
+    title:"아름다운 나라", date:"8월 15일 광복절", pages:7,
+    tags:["여행","음악"],
+    desc:"수원 재즈클럽에서 가야금으로 듣는 「아름다운 나라」. 눈물과 소름.",
+    color:"#080818", emoji:"🎶"
+  },
+  {
+    num:"14", file:"stories/gamja_maternity_leave.html",
+    title:"바쁘다 바빠, 행복한 9월", date:"8월 31일", pages:6,
+    tags:["일상","성장"],
+    desc:"육아휴직 시작! 운동·중국어·자격증·울진·제주. 존재감 뿜뿜 하람이.",
+    color:"#0c1e30", emoji:"✈️"
+  },
+];
+
+// ── 카드 렌더링 ──────────────────────────────────────
+const DARK = ["#0c1830","#0e1c38","#100820","#080818","#0c1e30","#2a1808"];
+function isDark(c){ return DARK.some(d=>c.startsWith(d.slice(0,6))); }
+
+function tagStyle(tag){
+  const map={
+    "감사":"background:rgba(90,154,216,.2);color:#7ab8f0;",
+    "태동":"background:rgba(90,154,216,.2);color:#7ab8f0;",
+    "여행":"background:rgba(180,130,240,.2);color:#c8a0e8;",
+    "음악":"background:rgba(180,130,240,.2);color:#c8a0e8;",
+    "일상":"background:rgba(255,219,96,.15);color:#fde87a;",
+    "성장":"background:rgba(46,102,24,.25);color:#88c848;",
+  };
+  return map[tag]||"background:rgba(255,255,255,.1);color:#ccc;";
+}
+
+function buildCards(){
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+  STORIES.forEach(s=>{
+    const dark = isDark(s.color);
+    const bg = dark
+      ? `background:linear-gradient(135deg,${s.color},#1a2e4a);`
+      : `background:linear-gradient(135deg,${s.color},${s.color}cc);`;
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.dataset.tags = s.tags.join(' ');
+    card.onclick = ()=>openBook(s.file, s.title);
+    card.innerHTML = `
+      <div class="thumb" style="${bg}">
+        <div style="font-size:52px;opacity:.85;filter:drop-shadow(0 2px 8px rgba(0,0,0,.3));">${s.emoji}</div>
+      </div>
+      <div class="body">
+        <span class="num">No.${s.num}</span>
+        <div class="title">${s.title}</div>
+        <div class="date">${s.date}</div>
+        <div class="desc">${s.desc}</div>
+        <div class="pages">📖 ${s.pages}페이지</div>
+        <div>${s.tags.map(t=>`<span class="tag" style="${tagStyle(t)}">${t}</span>`).join(' ')}</div>
+      </div>`;
+    grid.appendChild(card);
+  });
+  document.getElementById('total').textContent = STORIES.length;
+}
+
+// ── 필터 ────────────────────────────────────────────
+function filter(tag, btn){
+  document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.card').forEach(c=>{
+    c.style.display = (tag==='all'||c.dataset.tags.includes(tag)) ? '' : 'none';
+  });
+}
+
+// ── 모달 ────────────────────────────────────────────
+function openBook(file, title){
+  document.getElementById('mtitle').textContent = title;
+  document.getElementById('mframe').src = file;
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeBook(){
+  document.getElementById('modal').classList.remove('open');
+  document.getElementById('mframe').src='';
+  document.body.style.overflow='';
+}
+function closeModal(e){ if(e.target===document.getElementById('modal')) closeBook(); }
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeBook(); });
+
+// ── 별 배경 ─────────────────────────────────────────
+const starsEl = document.getElementById('stars');
+for(let i=0;i<55;i++){
+  const s=document.createElement('div');
+  s.className='star';
+  s.style.cssText=`left:${Math.random()*100}%;top:${Math.random()*40}%;width:${Math.random()*2+1}px;height:${Math.random()*2+1}px;animation-delay:${Math.random()*3}s;animation-duration:${2+Math.random()*3}s;`;
+  starsEl.appendChild(s);
+}
+
+// ── 초기화 ───────────────────────────────────────────
+buildCards();
+</script>
+</body>
+</html>

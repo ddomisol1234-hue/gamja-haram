@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>아름다운 나라</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Serif KR', Georgia, serif; background: #1a1428; display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 16px; }
+.book { max-width: 640px; width: 100%; background: #f9f6ef; border-radius: 18px; overflow: hidden; border: 1px solid #e0d8c8; box-shadow: 0 8px 40px rgba(0,0,0,0.5); }
+.page { display: none; flex-direction: column; }
+.page.on { display: flex; }
+.ill { width: 100%; flex-shrink: 0; }
+.ta { padding: 26px 34px 20px; background: #f9f6ef; display: flex; flex-direction: column; gap: 14px; }
+.pt { font-size: 17px; line-height: 2.2; color: #3a2e1e; text-align: center; word-break: keep-all; }
+.nr { display: flex; align-items: center; justify-content: space-between; }
+.nb { background: none; border: 1px solid #c8b99a; border-radius: 8px; padding: 8px 22px; font-size: 14px; color: #7a6548; cursor: pointer; font-family: inherit; }
+.nb:hover { background: #ede5d4; }
+.nb:disabled { opacity: .3; cursor: default; }
+.ni { font-size: 12px; color: #a08c6a; font-family: 'Noto Sans KR', sans-serif; }
+.cover-ta { padding: 22px 34px 20px; background: #f9f6ef; text-align: center; display: flex; flex-direction: column; gap: 6px; }
+.ct { font-size: 24px; font-weight: 700; color: #2d1a4a; line-height: 1.5; }
+.cs { font-size: 13px; color: #7a6090; font-family: 'Noto Sans KR', sans-serif; }
+
+.blink  { animation: blk 3s ease-in-out infinite; }
+.blink2 { animation: blk 3s ease-in-out .9s infinite; }
+.blink3 { animation: blk 3s ease-in-out 1.8s infinite; }
+@keyframes blk { 0%,100%{opacity:.45;} 50%{opacity:1;} }
+.sunray { animation: sr 4s ease-in-out infinite; }
+@keyframes sr { 0%,100%{opacity:.35;} 50%{opacity:.72;} }
+.tummy { animation: tm 4s ease-in-out infinite; transform-origin: center; }
+@keyframes tm { 0%,100%{transform:scale(1);} 50%{transform:scale(1.05,1.06);} }
+.sway { animation: sw 4.5s ease-in-out infinite; transform-origin: bottom center; }
+@keyframes sw { 0%,100%{transform:rotate(0deg);} 40%{transform:rotate(2deg);} 70%{transform:rotate(-1.5deg);} }
+.float { animation: fl 3.5s ease-in-out infinite; }
+@keyframes fl { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-9px);} }
+.note1 { animation: nt1 3.2s ease-in-out infinite; }
+@keyframes nt1 { 0%,100%{transform:translate(0,0);opacity:.6;} 50%{transform:translate(7px,-14px);opacity:1;} }
+.note2 { animation: nt2 2.8s ease-in-out .6s infinite; }
+@keyframes nt2 { 0%,100%{transform:translate(0,0);opacity:.5;} 50%{transform:translate(-9px,-12px);opacity:.9;} }
+.note3 { animation: nt3 3.5s ease-in-out 1.1s infinite; }
+@keyframes nt3 { 0%,100%{transform:translate(0,0);opacity:.55;} 50%{transform:translate(6px,-16px);opacity:.95;} }
+/* 가야금 현 떨림 */
+.gayageum { animation: gy 2s ease-in-out infinite; transform-origin: center; }
+@keyframes gy { 0%,100%{transform:scaleY(1);} 30%{transform:scaleY(1.06);} 60%{transform:scaleY(.96);} }
+/* 눈물 */
+.tear { animation: tr 3s ease-in-out infinite; }
+@keyframes tr { 0%,40%{transform:translateY(0);opacity:0;} 60%{opacity:.9;} 100%{transform:translateY(20px);opacity:0;} }
+.tear2 { animation: tr 3s ease-in-out .8s infinite; }
+/* 태극기 펄럭 */
+.flag { animation: fg 3s ease-in-out infinite; transform-origin: left center; }
+@keyframes fg { 0%,100%{transform:skewY(0deg) scaleX(1);} 40%{transform:skewY(2deg) scaleX(1.04);} 70%{transform:skewY(-1.5deg) scaleX(.98);} }
+/* 별 반짝 */
+.star-pop { animation: sp 2s ease-in-out infinite; }
+@keyframes sp { 0%,100%{transform:scale(1);opacity:.7;} 50%{transform:scale(1.3);opacity:1;} }
+/* 소름 물결 */
+.goosebump { animation: gb 1.5s ease-in-out infinite; }
+@keyframes gb { 0%,100%{transform:translateX(0);} 50%{transform:translateX(5px);} }
+</style>
+</head>
+<body>
+<div class="book">
+
+<!-- 표지 -->
+<div class="page on" id="p0">
+<svg class="ill" viewBox="0 0 640 285" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="285" fill="#0c0e20"/>
+  <!-- 밤하늘 -->
+  <circle cx="55" cy="24" r="1.3" fill="#fff" opacity=".6" class="blink"/>
+  <circle cx="180" cy="12" r="1" fill="#fff" opacity=".5"/>
+  <circle cx="340" cy="28" r="1.5" fill="#fff" opacity=".65" class="blink2"/>
+  <circle cx="490" cy="14" r="1" fill="#fff" opacity=".5"/>
+  <circle cx="598" cy="26" r="1.3" fill="#fff" opacity=".6" class="blink3"/>
+  <circle cx="100" cy="55" r="1" fill="#fff" opacity=".4"/>
+  <circle cx="540" cy="50" r="1" fill="#fff" opacity=".42"/>
+  <circle cx="245" cy="42" r="1" fill="#fff" opacity=".38"/>
+  <!-- 고구마별 -->
+  <circle cx="145" cy="50" r="8" fill="#ffdb60" class="star-pop"/>
+  <line x1="145" y1="33" x2="145" y2="25" stroke="#ffdb60" stroke-width="2" stroke-linecap="round"/>
+  <line x1="145" y1="67" x2="145" y2="75" stroke="#ffdb60" stroke-width="2" stroke-linecap="round"/>
+  <line x1="128" y1="50" x2="120" y2="50" stroke="#ffdb60" stroke-width="2" stroke-linecap="round"/>
+  <line x1="162" y1="50" x2="170" y2="50" stroke="#ffdb60" stroke-width="2" stroke-linecap="round"/>
+  <line x1="133" y1="38" x2="126" y2="30" stroke="#ffdb60" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="157" y1="62" x2="164" y2="70" stroke="#ffdb60" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="157" y1="38" x2="164" y2="30" stroke="#ffdb60" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="133" y1="62" x2="126" y2="70" stroke="#ffdb60" stroke-width="1.6" stroke-linecap="round"/>
+  <!-- 태극기 -->
+  <g class="flag">
+    <rect x="292" y="80" width="4" height="100" rx="1" fill="#8a8060"/>
+    <rect x="296" y="82" width="100" height="70" rx="3" fill="#fff" opacity=".95"/>
+    <!-- 태극 원 -->
+    <circle cx="346" cy="117" r="18" fill="#c82828" opacity=".85"/>
+    <path d="M328 117 A18 18 0 0 1 364 117 A9 9 0 0 1 346 117 A9 9 0 0 0 328 117Z" fill="#1a3888" opacity=".9"/>
+    <!-- 건 -->
+    <line x1="298" y1="90" x2="312" y2="90" stroke="#1a1a2a" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>
+    <line x1="298" y1="95" x2="312" y2="95" stroke="#1a1a2a" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>
+    <line x1="298" y1="100" x2="312" y2="100" stroke="#1a1a2a" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>
+    <!-- 곤 -->
+    <line x1="378" y1="90" x2="392" y2="90" stroke="#1a1a2a" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>
+    <line x1="378" y1="95" x2="392" y2="95" stroke="#1a1a2a" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>
+    <line x1="378" y1="100" x2="392" y2="100" stroke="#1a1a2a" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>
+    <!-- 감 -->
+    <line x1="298" y1="130" x2="312" y2="130" stroke="#1a1a2a" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>
+    <line x1="301" y1="136" x2="309" y2="136" stroke="#1a1a2a" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>
+    <line x1="298" y1="142" x2="312" y2="142" stroke="#1a1a2a" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>
+    <!-- 이 -->
+    <line x1="378" y1="130" x2="392" y2="130" stroke="#1a1a2a" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>
+    <line x1="381" y1="136" x2="389" y2="136" stroke="#1a1a2a" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>
+    <line x1="378" y1="142" x2="392" y2="142" stroke="#1a1a2a" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>
+  </g>
+  <!-- 가야금 실루엣 -->
+  <rect x="168" y="195" width="120" height="18" rx="5" fill="#c8a050" opacity=".7" transform="rotate(-20 168 195)"/>
+  <line x1="172" y1="192" x2="200" y2="228" stroke="#d4b060" stroke-width="1.5" opacity=".5"/>
+  <line x1="182" y1="190" x2="208" y2="226" stroke="#d4b060" stroke-width="1.5" opacity=".5"/>
+  <line x1="192" y1="188" x2="216" y2="224" stroke="#d4b060" stroke-width="1.5" opacity=".5"/>
+  <line x1="202" y1="186" x2="224" y2="222" stroke="#d4b060" stroke-width="1.5" opacity=".5"/>
+  <!-- 음표 -->
+  <text x="415" y="168" font-size="22" fill="#d4a8f0" opacity=".7" class="note1">♪</text>
+  <text x="460" y="148" font-size="18" fill="#88c8f0" opacity=".65" class="note2">♫</text>
+  <text x="490" y="178" font-size="20" fill="#f8d870" opacity=".7" class="note3">♩</text>
+  <!-- 엄마 배 -->
+  <ellipse class="tummy" cx="420" cy="232" rx="55" ry="44" fill="#1e3c60" opacity=".45"/>
+  <ellipse cx="420" cy="226" rx="42" ry="33" fill="#244878" opacity=".4"/>
+  <circle cx="420" cy="218" r="18" fill="#5a9ad8" opacity=".22"/>
+  <!-- 날짜 -->
+  <text x="320" y="270" font-size="11" fill="#8a7888" font-family="'Noto Sans KR',sans-serif" text-anchor="middle">2026년 8월 15일 · 광복절 · 수원</text>
+</svg>
+<div class="cover-ta">
+  <div class="ct">아름다운 나라</div>
+  <div class="cs">광복절에 하람이랑 재즈클럽에서 가야금을 들은 날 🎶</div>
+</div>
+<div class="ta">
+  <div class="pt" style="font-size:14px;color:#7a6090;font-family:'Noto Sans KR',sans-serif;">미래 이모, 작은 이모, 그리고 하람이와 함께한 수원 여행</div>
+  <div class="nr">
+    <button class="nb" disabled>← 이전</button>
+    <span class="ni">표지 · 6페이지</span>
+    <button class="nb" onclick="go(1)">다음 →</button>
+  </div>
+</div>
+</div>
+
+<!-- 1: 미래 이모 깜짝 놀람 -->
+<div class="page" id="p1">
+<svg class="ill" viewBox="0 0 640 262" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="262" fill="#e8f0f8"/>
+  <ellipse cx="320" cy="0" rx="400" ry="100" fill="#d0e4f4" opacity=".5"/>
+  <!-- 해 -->
+  <circle cx="320" cy="58" r="34" fill="#fff8c0" opacity=".42"/>
+  <circle cx="320" cy="58" r="22" fill="#fde87a" opacity=".82"/>
+  <line x1="320" y1="27" x2="320" y2="19" stroke="#f0c830" stroke-width="2" stroke-linecap="round" class="sunray"/>
+  <line x1="346" y1="35" x2="353" y2="27" stroke="#f0c830" stroke-width="2" stroke-linecap="round" class="sunray"/>
+  <line x1="294" y1="35" x2="287" y2="27" stroke="#f0c830" stroke-width="2" stroke-linecap="round" class="sunray"/>
+  <!-- 수원 배경 건물 -->
+  <rect x="50" y="140" width="55" height="90" rx="2" fill="#c0c8d8" opacity=".6"/>
+  <rect x="115" y="120" width="45" height="110" rx="2" fill="#b8c0d0" opacity=".6"/>
+  <rect x="470" y="130" width="50" height="100" rx="2" fill="#c0c8d8" opacity=".6"/>
+  <rect x="530" y="115" width="55" height="115" rx="2" fill="#b8c0d0" opacity=".6"/>
+  <!-- 창문들 -->
+  <rect x="62" y="155" width="10" height="8" rx="1" fill="#e8f0f8" opacity=".8"/>
+  <rect x="78" y="155" width="10" height="8" rx="1" fill="#e8f0f8" opacity=".8"/>
+  <rect x="62" y="173" width="10" height="8" rx="1" fill="#e8f0f8" opacity=".8"/>
+  <rect x="78" y="173" width="10" height="8" rx="1" fill="#e8f0f8" opacity=".8"/>
+  <!-- 수원화성 성벽 느낌 -->
+  <rect x="160" y="168" width="320" height="12" rx="2" fill="#c8b898" opacity=".5"/>
+  <rect x="168" y="160" width="14" height="12" rx="1" fill="#c8b898" opacity=".5"/>
+  <rect x="192" y="160" width="14" height="12" rx="1" fill="#c8b898" opacity=".5"/>
+  <rect x="216" y="160" width="14" height="12" rx="1" fill="#c8b898" opacity=".5"/>
+  <rect x="240" y="160" width="14" height="12" rx="1" fill="#c8b898" opacity=".5"/>
+  <rect x="264" y="160" width="14" height="12" rx="1" fill="#c8b898" opacity=".5"/>
+  <rect x="288" y="160" width="14" height="12" rx="1" fill="#c8b898" opacity=".5"/>
+  <rect x="312" y="160" width="14" height="12" rx="1" fill="#c8b898" opacity=".5"/>
+  <rect x="336" y="160" width="14" height="12" rx="1" fill="#c8b898" opacity=".5"/>
+  <rect x="360" y="160" width="14" height="12" rx="1" fill="#c8b898" opacity=".5"/>
+  <rect x="384" y="160" width="14" height="12" rx="1" fill="#c8b898" opacity=".5"/>
+  <rect x="408" y="160" width="14" height="12" rx="1" fill="#c8b898" opacity=".5"/>
+  <rect x="432" y="160" width="14" height="12" rx="1" fill="#c8b898" opacity=".5"/>
+  <!-- 세 사람: 작은이모, 엄마(배), 미래이모 -->
+  <!-- 작은 이모 -->
+  <ellipse cx="205" cy="222" rx="22" ry="13" fill="#5a8060" opacity=".65"/>
+  <circle cx="205" cy="208" r="15" fill="#5a8060" opacity=".7"/>
+  <ellipse cx="205" cy="197" rx="13" ry="7" fill="#3a5838" opacity=".55"/>
+  <circle cx="199" cy="207" r="2.2" fill="#88b098" opacity=".7"/>
+  <circle cx="211" cy="207" r="2.2" fill="#88b098" opacity=".7"/>
+  <path d="M200 215 Q205 220 210 215" fill="none" stroke="#6a9878" stroke-width="1.8" stroke-linecap="round"/>
+  <!-- 엄마 (배 볼록) -->
+  <ellipse cx="320" cy="225" rx="28" ry="15" fill="#4a6278" opacity=".65"/>
+  <ellipse cx="320" cy="202" rx="22" ry="27" fill="#4a6278" opacity=".7"/>
+  <circle cx="320" cy="174" r="20" fill="#f8e0c0"/>
+  <ellipse cx="303" cy="177" rx="6" ry="8" fill="#f5d4b0"/>
+  <ellipse cx="337" cy="177" rx="6" ry="8" fill="#f5d4b0"/>
+  <ellipse cx="320" cy="163" rx="18" ry="9" fill="#5a3820" opacity=".55"/>
+  <path d="M312 172 Q316 167 320 172" fill="none" stroke="#5a3820" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M320 172 Q324 167 328 172" fill="none" stroke="#5a3820" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M313 181 Q320 187 327 181" fill="none" stroke="#c07050" stroke-width="2" stroke-linecap="round"/>
+  <ellipse class="tummy" cx="320" cy="212" rx="26" ry="21" fill="#f5c890" opacity=".55"/>
+  <!-- 미래 이모 (깜짝 놀람) -->
+  <ellipse cx="435" cy="222" rx="22" ry="13" fill="#7a6090" opacity=".65"/>
+  <circle cx="435" cy="208" r="15" fill="#7a6090" opacity=".7"/>
+  <ellipse cx="435" cy="197" rx="13" ry="7" fill="#5a4068" opacity=".55"/>
+  <!-- 깜짝 놀란 눈 크게 -->
+  <circle cx="429" cy="206" r="3.5" fill="#a888c8" opacity=".8"/>
+  <circle cx="441" cy="206" r="3.5" fill="#a888c8" opacity=".8"/>
+  <!-- 놀란 입 O -->
+  <ellipse cx="435" cy="215" rx="4" ry="5" fill="none" stroke="#8a70a8" stroke-width="2" opacity=".7"/>
+  <!-- 손 양볼에 -->
+  <ellipse cx="420" cy="212" rx="8" ry="6" fill="#7a6090" opacity=".65" transform="rotate(30 420 212)"/>
+  <ellipse cx="450" cy="212" rx="8" ry="6" fill="#7a6090" opacity=".65" transform="rotate(-30 450 212)"/>
+  <!-- 깜짝! 말풍선 -->
+  <rect x="452" y="165" width="148" height="36" rx="10" fill="#fff" opacity=".85"/>
+  <polygon points="452,185 440,180 452,192" fill="#fff" opacity=".85"/>
+  <text x="526" y="180" font-size="11" fill="#7a5090" font-family="'Noto Sans KR',sans-serif" text-anchor="middle">진짜요?! 축하해요!!</text>
+  <text x="526" y="194" font-size="11" fill="#c07090" font-family="'Noto Sans KR',sans-serif" text-anchor="middle">😱🎉</text>
+  <!-- 풀밭 -->
+  <ellipse cx="320" cy="256" rx="300" ry="13" fill="#88c848" opacity=".2"/>
+</svg>
+<div class="ta">
+  <div class="pt">
+    34년 친구 미래 이모를 만나러<br>
+    작은 이모랑 수원에 갔어요.<br>
+    하람이 소식을 몰랐던 미래 이모—<br>
+    정말 깜짝 놀라며 많이 축하해 줬어요 🎉
+  </div>
+  <div class="nr">
+    <button class="nb" onclick="go(-1)">← 이전</button>
+    <span class="ni">1 / 6</span>
+    <button class="nb" onclick="go(1)">다음 →</button>
+  </div>
+</div>
+</div>
+
+<!-- 2: 허리 아픈 엄마 ㅋㅋ -->
+<div class="page" id="p2">
+<svg class="ill" viewBox="0 0 640 258" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="258" fill="#f0f4f0"/>
+  <ellipse cx="320" cy="0" rx="400" ry="100" fill="#ddecd8" opacity=".5"/>
+  <!-- 수원 길거리 배경 -->
+  <rect x="0" y="185" width="640" height="73" fill="#c8b898" opacity=".3"/>
+  <rect x="0" y="183" width="640" height="5" fill="#b8a888" opacity=".35"/>
+  <!-- 행인들 (작게) -->
+  <ellipse cx="100" cy="200" rx="8" ry="5" fill="#7a9070" opacity=".5"/>
+  <circle cx="100" cy="194" r="6" fill="#7a9070" opacity=".5"/>
+  <ellipse cx="530" cy="202" rx="8" ry="5" fill="#8a9880" opacity=".5"/>
+  <circle cx="530" cy="196" r="6" fill="#8a9880" opacity=".5"/>
+  <!-- 작은 이모 + 미래 이모 걷는 중 -->
+  <ellipse cx="220" cy="218" rx="20" ry="11" fill="#5a8060" opacity=".65"/>
+  <circle cx="220" cy="206" r="13" fill="#5a8060" opacity=".7"/>
+  <ellipse cx="258" cy="220" rx="20" ry="11" fill="#7a6090" opacity=".65"/>
+  <circle cx="258" cy="208" r="13" fill="#7a6090" opacity=".7"/>
+  <!-- 엄마 (허리 잡고 쓰러질 듯) -->
+  <ellipse cx="395" cy="222" rx="30" ry="15" fill="#4a6278" opacity=".6"/>
+  <ellipse cx="395" cy="195" rx="22" ry="28" fill="#4a6278" opacity=".65"/>
+  <circle cx="395" cy="167" r="20" fill="#f8e0c0"/>
+  <ellipse cx="377" cy="170" rx="5.5" ry="7.5" fill="#f5d4b0"/>
+  <ellipse cx="413" cy="170" rx="5.5" ry="7.5" fill="#f5d4b0"/>
+  <ellipse cx="395" cy="156" rx="18" ry="9" fill="#5a3820" opacity=".55"/>
+  <!-- 힘든 표정 -->
+  <circle cx="388" cy="165" r="2.5" fill="#5a3820" opacity=".7"/>
+  <circle cx="402" cy="165" r="2.5" fill="#5a3820" opacity=".7"/>
+  <path d="M389 174 Q395 171 401 174" fill="none" stroke="#c07050" stroke-width="1.8" stroke-linecap="round"/>
+  <!-- 땀 -->
+  <ellipse cx="380" cy="160" r="2.5" fill="#88c8e8" opacity=".7" class="blink"/>
+  <!-- 배 볼록 -->
+  <ellipse class="tummy" cx="395" cy="205" rx="26" ry="22" fill="#f5c890" opacity=".52"/>
+  <!-- 허리 잡는 손 -->
+  <path d="M374 198 Q368 192 365 182" fill="none" stroke="#4a6278" stroke-width="9" stroke-linecap="round" opacity=".7"/>
+  <ellipse cx="363" cy="178" rx="7" ry="5" fill="#4a6278" opacity=".7"/>
+  <!-- 쓰러짐 표시 -->
+  <text x="430" y="170" font-size="13" fill="#e84030" font-family="'Noto Sans KR',sans-serif" opacity=".75" class="float">허리야...💥</text>
+  <text x="430" y="188" font-size="12" fill="#c06030" font-family="'Noto Sans KR',sans-serif" opacity=".65">ㅋㅋ</text>
+  <!-- 말풍선 이모들 -->
+  <rect x="128" y="172" width="115" height="28" rx="8" fill="#fff" opacity=".8"/>
+  <polygon points="195,200 190,212 202,200" fill="#fff" opacity=".8"/>
+  <text x="185" y="191" font-size="10" fill="#5a7050" font-family="'Noto Sans KR',sans-serif" text-anchor="middle">괜찮아요? ㅋㅋ</text>
+</svg>
+<div class="ta">
+  <div class="pt">
+    호기롭게 떠난 여행이었지만<br>
+    엄마는 허리가 너무 아파서<br>
+    중간중간 쓰러져 있었어요 ㅋㅋ<br>
+    그래도 행복했어요!
+  </div>
+  <div class="nr">
+    <button class="nb" onclick="go(-1)">← 이전</button>
+    <span class="ni">2 / 6</span>
+    <button class="nb" onclick="go(1)">다음 →</button>
+  </div>
+</div>
+</div>
+
+<!-- 3: 재즈클럽 + 가야금 -->
+<div class="page" id="p3">
+<svg class="ill" viewBox="0 0 640 265" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="265" fill="#080818"/>
+  <!-- 무대 조명 -->
+  <ellipse cx="320" cy="155" rx="180" ry="110" fill="#8060a0" opacity=".08"/>
+  <ellipse cx="320" cy="155" rx="110" ry="70" fill="#8060a0" opacity=".1"/>
+  <!-- 조명 빔 -->
+  <path d="M200 0 Q240 80 220 200" fill="none" stroke="#d4a8f0" stroke-width="20" stroke-linecap="round" opacity=".06"/>
+  <path d="M320 0 Q320 80 320 200" fill="none" stroke="#f8e060" stroke-width="20" stroke-linecap="round" opacity=".06"/>
+  <path d="M440 0 Q400 80 420 200" fill="none" stroke="#d4a8f0" stroke-width="20" stroke-linecap="round" opacity=".06"/>
+  <!-- 가야금 연주자 -->
+  <ellipse cx="260" cy="178" rx="18" ry="12" fill="#3a2848" opacity=".85"/>
+  <circle cx="260" cy="165" r="13" fill="#3a2848" opacity=".9"/>
+  <!-- 가야금 -->
+  <g class="gayageum">
+    <rect x="158" y="178" width="145" height="14" rx="5" fill="#c8a050" opacity=".85"/>
+    <rect x="165" y="173" width="130" height="8" rx="3" fill="#d8b060" opacity=".8"/>
+  </g>
+  <!-- 가야금 줄 12개 -->
+  <line x1="172" y1="173" x2="168" y2="192" stroke="#8a6820" stroke-width="1.2" opacity=".6"/>
+  <line x1="183" y1="173" x2="179" y2="192" stroke="#8a6820" stroke-width="1.2" opacity=".6"/>
+  <line x1="194" y1="173" x2="190" y2="192" stroke="#8a6820" stroke-width="1.2" opacity=".6"/>
+  <line x1="205" y1="173" x2="201" y2="192" stroke="#8a6820" stroke-width="1.2" opacity=".6"/>
+  <line x1="216" y1="173" x2="212" y2="192" stroke="#8a6820" stroke-width="1.2" opacity=".6"/>
+  <line x1="227" y1="173" x2="223" y2="192" stroke="#8a6820" stroke-width="1.2" opacity=".6"/>
+  <line x1="238" y1="173" x2="234" y2="192" stroke="#8a6820" stroke-width="1.2" opacity=".6"/>
+  <line x1="249" y1="173" x2="245" y2="192" stroke="#8a6820" stroke-width="1.2" opacity=".6"/>
+  <line x1="260" y1="173" x2="256" y2="192" stroke="#8a6820" stroke-width="1.2" opacity=".6"/>
+  <line x1="271" y1="173" x2="267" y2="192" stroke="#8a6820" stroke-width="1.2" opacity=".6"/>
+  <line x1="282" y1="173" x2="278" y2="192" stroke="#8a6820" stroke-width="1.2" opacity=".6"/>
+  <line x1="288" y1="173" x2="285" y2="192" stroke="#8a6820" stroke-width="1.2" opacity=".6"/>
+  <!-- 해금 연주자 -->
+  <ellipse cx="380" cy="178" rx="16" ry="11" fill="#2a3848" opacity=".85"/>
+  <circle cx="380" cy="165" r="12" fill="#2a3848" opacity=".9"/>
+  <!-- 해금 -->
+  <line x1="380" y1="140" x2="380" y2="192" stroke="#c8a050" stroke-width="3" stroke-linecap="round" opacity=".8"/>
+  <ellipse cx="380" cy="185" rx="12" ry="8" fill="#b89040" opacity=".7"/>
+  <!-- 콘트라베이스 -->
+  <ellipse cx="460" cy="185" rx="16" ry="24" fill="#8a6030" opacity=".7"/>
+  <ellipse cx="460" cy="180" rx="10" ry="16" fill="#a07038" opacity=".65"/>
+  <line x1="460" y1="138" x2="460" y2="162" stroke="#8a6030" stroke-width="3" opacity=".7"/>
+  <!-- 연주자 -->
+  <ellipse cx="455" cy="175" rx="15" ry="10" fill="#2a3040" opacity=".85"/>
+  <circle cx="455" cy="162" r="11" fill="#2a3040" opacity=".9"/>
+  <!-- 음표 -->
+  <text x="165" y="130" font-size="20" fill="#d4a8f0" opacity=".7" class="note1">♪</text>
+  <text x="335" y="118" font-size="24" fill="#f8d870" opacity=".65" class="note2">♫</text>
+  <text x="490" y="132" font-size="18" fill="#d4a8f0" opacity=".7" class="note3">♩</text>
+  <text x="420" y="115" font-size="16" fill="#88d8f0" opacity=".65" class="note1" style="animation-delay:.8s">♬</text>
+  <!-- 무대 바닥 -->
+  <rect x="80" y="215" width="480" height="38" rx="4" fill="#14101e" opacity=".85"/>
+  <!-- 객석 세 사람 -->
+  <ellipse cx="222" cy="248" rx="19" ry="10" fill="#2a1848" opacity=".75"/>
+  <circle cx="222" cy="237" r="12" fill="#2a1848" opacity=".8"/>
+  <ellipse cx="258" cy="250" rx="22" ry="11" fill="#3a2858" opacity=".7"/>
+  <circle cx="258" cy="239" r="13" fill="#3a2858" opacity=".75"/>
+  <ellipse class="tummy" cx="258" cy="248" rx="19" ry="14" fill="#4a3868" opacity=".5"/>
+  <ellipse cx="295" cy="249" rx="19" ry="10" fill="#3a2848" opacity=".7"/>
+  <circle cx="295" cy="238" r="12" fill="#3a2848" opacity=".75"/>
+  <!-- 프로그램 -->
+  <rect x="232" y="246" width="14" height="18" rx="2" fill="#f5f0e0" opacity=".6"/>
+</svg>
+<div class="ta">
+  <div class="pt">
+    그날 밤, 재즈클럽에서<br>
+    가야금, 해금, 콘트라베이스로<br>
+    「아름다운 나라」를 연주했어요.<br>
+    하람이도 함께 들었어요 🎶
+  </div>
+  <div class="nr">
+    <button class="nb" onclick="go(-1)">← 이전</button>
+    <span class="ni">3 / 6</span>
+    <button class="nb" onclick="go(1)">다음 →</button>
+  </div>
+</div>
+</div>
+
+<!-- 4: 눈물 + 소름 -->
+<div class="page" id="p4">
+<svg class="ill" viewBox="0 0 640 262" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="262" fill="#080c18"/>
+  <circle cx="80" cy="22" r="1.2" fill="#fff" opacity=".5" class="blink"/>
+  <circle cx="280" cy="12" r="1.5" fill="#fff" opacity=".55" class="blink2"/>
+  <circle cx="520" cy="18" r="1" fill="#fff" opacity=".5"/>
+  <!-- 음악 물결 가득 -->
+  <path d="M40 100 Q120 80 200 100 Q280 120 360 100 Q440 80 520 100 Q600 120 640 100" fill="none" stroke="#d4a8f0" stroke-width="1.5" stroke-linecap="round" opacity=".35" class="goosebump"/>
+  <path d="M40 118 Q120 98 200 118 Q280 138 360 118 Q440 98 520 118 Q600 138 640 118" fill="none" stroke="#d4a8f0" stroke-width="1.2" stroke-linecap="round" opacity=".28" class="goosebump" style="animation-delay:.3s"/>
+  <path d="M40 136 Q120 116 200 136 Q280 156 360 136 Q440 116 520 136 Q600 156 640 136" fill="none" stroke="#88c8f0" stroke-width="1" stroke-linecap="round" opacity=".22" class="goosebump" style="animation-delay:.6s"/>
+  <!-- 엄마 감동 실루엣 -->
+  <ellipse cx="320" cy="215" rx="42" ry="22" fill="#2a3858" opacity=".65"/>
+  <ellipse cx="320" cy="184" rx="30" ry="36" fill="#2a3858" opacity=".7"/>
+  <circle cx="320" cy="152" r="26" fill="#f8e0c0"/>
+  <ellipse cx="298" cy="156" rx="7" ry="9" fill="#f5d4b0"/>
+  <ellipse cx="342" cy="156" rx="7" ry="9" fill="#f5d4b0"/>
+  <ellipse cx="320" cy="138" rx="22" ry="11" fill="#5a3820" opacity=".55"/>
+  <!-- 눈 감고 감동 -->
+  <path d="M310 150 Q315 145 320 150" fill="none" stroke="#5a3820" stroke-width="2" stroke-linecap="round"/>
+  <path d="M320 150 Q325 145 330 150" fill="none" stroke="#5a3820" stroke-width="2" stroke-linecap="round"/>
+  <!-- 눈물 흘림 -->
+  <ellipse class="tear" cx="310" cy="158" rx="3" ry="4.5" fill="#90c8e8" opacity=".85"/>
+  <ellipse class="tear2" cx="330" cy="157" rx="3" ry="4.5" fill="#90c8e8" opacity=".85"/>
+  <!-- 볼 빨개 감동 -->
+  <circle cx="302" cy="162" r="8" fill="#f09090" opacity=".4"/>
+  <circle cx="338" cy="162" r="8" fill="#f09090" opacity=".4"/>
+  <!-- 입 감동으로 떨림 -->
+  <path d="M311 170 Q320 177 329 170" fill="none" stroke="#c07050" stroke-width="2.2" stroke-linecap="round" opacity=".8"/>
+  <!-- 배 볼록 -->
+  <ellipse class="tummy" cx="320" cy="200" rx="34" ry="28" fill="#3a5878" opacity=".55"/>
+  <!-- 하람 배 안 반응 -->
+  <circle cx="320" cy="197" r="14" fill="#5a9ad8" opacity=".2"/>
+  <path d="M312 195 Q312 189 320 193 Q328 189 328 195 Q328 202 320 206 Q312 202 312 195Z" fill="#5a9ad8" opacity=".3"/>
+  <!-- 소름! 물결 -->
+  <text x="140" y="145" font-size="14" fill="#d4a8f0" font-family="'Noto Sans KR',sans-serif" opacity=".75" class="goosebump">소름...</text>
+  <text x="462" y="142" font-size="14" fill="#88c8f0" font-family="'Noto Sans KR',sans-serif" opacity=".75" class="goosebump" style="animation-delay:.5s">눈물이...</text>
+  <!-- 음표 -->
+  <text x="155" y="195" font-size="18" fill="#d4a8f0" opacity=".6" class="note1">♪</text>
+  <text x="468" y="188" font-size="22" fill="#f8d870" opacity=".58" class="note2">♫</text>
+  <!-- 태극기 작게 위에 -->
+  <rect x="295" y="28" width="50" height="35" rx="2" fill="#fff" opacity=".7"/>
+  <circle cx="320" cy="46" r="9" fill="#c82828" opacity=".8"/>
+  <path d="M311 46 A9 9 0 0 1 329 46 A4.5 4.5 0 0 1 320 46 A4.5 4.5 0 0 0 311 46Z" fill="#1a3888" opacity=".85"/>
+  <text x="320" y="78" font-size="10" fill="#9888b8" font-family="'Noto Sans KR',sans-serif" text-anchor="middle" opacity=".8">8월 15일 광복절</text>
+</svg>
+<div class="ta">
+  <div class="pt">
+    진짜 눈물이 나면서 소름이 돋았어요.<br>
+    광복절에, 하람이랑 함께 앉아<br>
+    「아름다운 나라」를 듣는다는 것—<br>
+    너무 소중한 순간이었어요.
+  </div>
+  <div class="nr">
+    <button class="nb" onclick="go(-1)">← 이전</button>
+    <span class="ni">4 / 6</span>
+    <button class="nb" onclick="go(1)">다음 →</button>
+  </div>
+</div>
+</div>
+
+<!-- 5: 아름다운 나라를 물려줄게 -->
+<div class="page" id="p5">
+<svg class="ill" viewBox="0 0 640 268" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="268" fill="#e8f3e0"/>
+  <ellipse cx="320" cy="0" rx="400" ry="118" fill="#d0ecc0" opacity=".5"/>
+  <!-- 햇살 -->
+  <circle cx="320" cy="65" r="42" fill="#fff8c0" opacity=".42"/>
+  <circle cx="320" cy="65" r="27" fill="#fde87a" opacity=".85"/>
+  <line x1="320" y1="30" x2="320" y2="21" stroke="#f0c830" stroke-width="2.2" stroke-linecap="round" class="sunray"/>
+  <line x1="350" y1="39" x2="358" y2="30" stroke="#f0c830" stroke-width="2.2" stroke-linecap="round" class="sunray"/>
+  <line x1="290" y1="39" x2="282" y2="30" stroke="#f0c830" stroke-width="2.2" stroke-linecap="round" class="sunray"/>
+  <line x1="360" y1="65" x2="369" y2="65" stroke="#f0c830" stroke-width="2.2" stroke-linecap="round" class="sunray"/>
+  <line x1="280" y1="65" x2="271" y2="65" stroke="#f0c830" stroke-width="2.2" stroke-linecap="round" class="sunray"/>
+  <!-- 큰 나무 = 나라 -->
+  <g class="sway">
+    <rect x="308" y="138" width="26" height="126" rx="6" fill="#6a4422"/>
+    <ellipse cx="321" cy="122" rx="82" ry="76" fill="#2e6618"/>
+    <ellipse cx="282" cy="105" rx="54" ry="50" fill="#388020"/>
+    <ellipse cx="362" cy="110" rx="52" ry="48" fill="#2e6618"/>
+    <!-- 나무 속 태극기 -->
+    <rect x="302" y="98" width="38" height="26" rx="3" fill="#fff" opacity=".88"/>
+    <circle cx="321" cy="111" r="7" fill="#c82828" opacity=".85"/>
+    <path d="M314 111 A7 7 0 0 1 328 111 A3.5 3.5 0 0 1 321 111 A3.5 3.5 0 0 0 314 111Z" fill="#1a3888" opacity=".88"/>
+  </g>
+  <!-- 엄마 당당하게 -->
+  <ellipse cx="175" cy="222" rx="28" ry="15" fill="#4a6278" opacity=".65"/>
+  <ellipse cx="175" cy="194" rx="22" ry="30" fill="#4a6278" opacity=".7"/>
+  <circle cx="175" cy="165" r="21" fill="#f8e0c0"/>
+  <ellipse cx="157" cy="168" rx="6" ry="8.5" fill="#f5d4b0"/>
+  <ellipse cx="193" cy="168" rx="6" ry="8.5" fill="#f5d4b0"/>
+  <ellipse cx="175" cy="153" rx="19" ry="10" fill="#5a3820" opacity=".55"/>
+  <path d="M167 164 Q171 159 175 164" fill="none" stroke="#5a3820" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M175 164 Q179 159 183 164" fill="none" stroke="#5a3820" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M167 174 Q175 181 183 174" fill="none" stroke="#c07050" stroke-width="2.2" stroke-linecap="round"/>
+  <ellipse class="tummy" cx="175" cy="210" rx="28" ry="23" fill="#f5c890" opacity=".55"/>
+  <path d="M163 204 Q163 197 175 201 Q187 197 187 204 Q187 212 175 217 Q163 212 163 204Z" fill="#5a9ad8" opacity=".3"/>
+  <!-- 엄지척 -->
+  <path d="M195 200 Q218 188 228 175" fill="none" stroke="#4a6278" stroke-width="10" stroke-linecap="round" opacity=".7"/>
+  <ellipse cx="233" cy="170" rx="9" ry="13" fill="#f5d4b0" transform="rotate(-30 233 170)"/>
+  <rect x="228" y="157" width="9" height="7" rx="3" fill="#f5d4b0" transform="rotate(-30 228 157)"/>
+  <!-- 고구마별 -->
+  <circle cx="525" cy="46" r="7" fill="#ffdb60" opacity=".88" class="star-pop"/>
+  <line x1="525" y1="30" x2="525" y2="22" stroke="#ffdb60" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="525" y1="62" x2="525" y2="70" stroke="#ffdb60" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="509" y1="46" x2="501" y2="46" stroke="#ffdb60" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="541" y1="46" x2="549" y2="46" stroke="#ffdb60" stroke-width="1.8" stroke-linecap="round"/>
+  <!-- 꽃 -->
+  <circle cx="88" cy="248" r="7" fill="#f7b2c0" opacity=".8"/>
+  <circle cx="108" cy="240" r="6" fill="#fcd97a" opacity=".8"/>
+  <circle cx="530" cy="244" r="7" fill="#c9b2f7" opacity=".8"/>
+  <!-- 풀밭 -->
+  <ellipse cx="320" cy="260" rx="300" ry="13" fill="#88c848" opacity=".22"/>
+</svg>
+<div class="ta">
+  <div class="pt">
+    이 아름다운 나라를<br>
+    더 아름답게 물려줘야겠다고 생각했어요.<br>
+    엄마부터 좋은 어른이 되어서<br>
+    하람이가 이 나라에 태어난 걸 자랑스럽게 여기도록.
+  </div>
+  <div class="nr">
+    <button class="nb" onclick="go(-1)">← 이전</button>
+    <span class="ni">5 / 6</span>
+    <button class="nb" onclick="go(1)">다음 →</button>
+  </div>
+</div>
+</div>
+
+<!-- 6: 마지막 + 가야금 -->
+<div class="page" id="p6">
+<svg class="ill" viewBox="0 0 640 272" xmlns="http://www.w3.org/2000/svg">
+  <rect width="640" height="272" fill="#0c0e20"/>
+  <!-- 별 -->
+  <circle cx="58" cy="22" r="1.3" fill="#fff" opacity=".55" class="blink"/>
+  <circle cx="190" cy="11" r="1" fill="#fff" opacity=".5"/>
+  <circle cx="355" cy="26" r="1.5" fill="#fff" opacity=".65" class="blink2"/>
+  <circle cx="490" cy="13" r="1" fill="#fff" opacity=".5"/>
+  <circle cx="602" cy="24" r="1.3" fill="#fff" opacity=".55" class="blink3"/>
+  <circle cx="112" cy="52" r="1" fill="#fff" opacity=".42"/>
+  <circle cx="540" cy="48" r="1" fill="#fff" opacity=".4"/>
+  <!-- 고구마별 -->
+  <circle cx="148" cy="50" r="8" fill="#ffdb60" class="star-pop"/>
+  <line x1="148" y1="33" x2="148" y2="25" stroke="#ffdb60" stroke-width="2" stroke-linecap="round"/>
+  <line x1="148" y1="67" x2="148" y2="75" stroke="#ffdb60" stroke-width="2" stroke-linecap="round"/>
+  <line x1="131" y1="50" x2="123" y2="50" stroke="#ffdb60" stroke-width="2" stroke-linecap="round"/>
+  <line x1="165" y1="50" x2="173" y2="50" stroke="#ffdb60" stroke-width="2" stroke-linecap="round"/>
+  <line x1="136" y1="38" x2="129" y2="30" stroke="#ffdb60" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="160" y1="62" x2="167" y2="70" stroke="#ffdb60" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="160" y1="38" x2="167" y2="30" stroke="#ffdb60" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="136" y1="62" x2="129" y2="70" stroke="#ffdb60" stroke-width="1.6" stroke-linecap="round"/>
+  <circle cx="148" cy="50" r="24" fill="#ffdb60" opacity=".07"/>
+  <!-- 가야금 크게 -->
+  <g class="gayageum">
+    <rect x="168" y="155" width="200" height="22" rx="8" fill="#c8a050" opacity=".88"/>
+    <rect x="176" y="148" width="184" height="12" rx="5" fill="#d8b060" opacity=".82"/>
+  </g>
+  <!-- 가야금 줄 12개 -->
+  <line x1="182" y1="148" x2="176" y2="177" stroke="#8a6820" stroke-width="1.3" opacity=".65"/>
+  <line x1="196" y1="148" x2="190" y2="177" stroke="#8a6820" stroke-width="1.3" opacity=".65"/>
+  <line x1="210" y1="148" x2="204" y2="177" stroke="#8a6820" stroke-width="1.3" opacity=".65"/>
+  <line x1="224" y1="148" x2="218" y2="177" stroke="#8a6820" stroke-width="1.3" opacity=".65"/>
+  <line x1="238" y1="148" x2="232" y2="177" stroke="#8a6820" stroke-width="1.3" opacity=".65"/>
+  <line x1="252" y1="148" x2="246" y2="177" stroke="#8a6820" stroke-width="1.3" opacity=".65"/>
+  <line x1="266" y1="148" x2="260" y2="177" stroke="#8a6820" stroke-width="1.3" opacity=".65"/>
+  <line x1="280" y1="148" x2="274" y2="177" stroke="#8a6820" stroke-width="1.3" opacity=".65"/>
+  <line x1="294" y1="148" x2="288" y2="177" stroke="#8a6820" stroke-width="1.3" opacity=".65"/>
+  <line x1="308" y1="148" x2="302" y2="177" stroke="#8a6820" stroke-width="1.3" opacity=".65"/>
+  <line x1="322" y1="148" x2="316" y2="177" stroke="#8a6820" stroke-width="1.3" opacity=".65"/>
+  <line x1="352" y1="148" x2="348" y2="177" stroke="#8a6820" stroke-width="1.3" opacity=".65"/>
+  <!-- 음표 -->
+  <text x="420" y="148" font-size="22" fill="#d4a8f0" opacity=".72" class="note1">♪</text>
+  <text x="462" y="130" font-size="18" fill="#f8d870" opacity=".68" class="note2">♫</text>
+  <text x="498" y="162" font-size="20" fill="#88d8f0" opacity=".7" class="note3">♩</text>
+  <!-- ps 가야금 배울까 말풍선 -->
+  <rect x="400" y="185" width="205" height="52" rx="12" fill="#1a1830" opacity=".88" stroke="#4a3868" stroke-width="1"/>
+  <polygon points="400,215 388,210 400,222" fill="#1a1830" opacity=".88"/>
+  <text x="502" y="204" font-size="11" fill="#c8a8e8" font-family="'Noto Sans KR',sans-serif" text-anchor="middle">ps. 엄마 9월부터</text>
+  <text x="502" y="220" font-size="11" fill="#c8a8e8" font-family="'Noto Sans KR',sans-serif" text-anchor="middle">가야금 배울까 고민 중 🎵</text>
+  <text x="502" y="232" font-size="10" fill="#a888c8" font-family="'Noto Sans KR',sans-serif" text-anchor="middle">작은이모 "이제 알겠다" ㅋㅋ</text>
+  <!-- 땅 -->
+  <ellipse cx="320" cy="266" rx="290" ry="14" fill="#1a1030" opacity=".42"/>
+</svg>
+<div class="ta">
+  <div class="pt">
+    하람아, 이 아름다운 나라에<br>
+    태어나게 되어 정말 다행이야.<br>
+    엄마가 좋은 어른이 될게.<br>
+    <span style="color:#d4a8f0;font-weight:600;">사랑해, 감자야. 사랑해, 하람아 🌸🇰🇷</span>
+  </div>
+  <div class="nr">
+    <button class="nb" onclick="go(-1)">← 이전</button>
+    <span class="ni">끝</span>
+    <button class="nb" disabled>다음 →</button>
+  </div>
+</div>
+</div>
+
+</div>
+<script>
+let c = 0; const n = 7;
+function go(d) {
+  document.getElementById('p'+c).classList.remove('on');
+  c = Math.max(0, Math.min(n-1, c+d));
+  document.getElementById('p'+c).classList.add('on');
+}
+</script>
+</body>
+</html>
